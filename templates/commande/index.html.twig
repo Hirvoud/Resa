@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block body %}
+
+    <div class="col-lg-12">
+        <h1>Billetterie du Musée du Louvre</h1>
+    </div>
+
+    <div class="col-lg-6">
+        <h2>Bienvenue</h2>
+    </div>
+
+    <div class="col-lg-6">
+        <h2>Liste des tarifs</h2>
+    </div>
+
+    <!-- Méthode post/session -->
+    <div>
+        <form action="{{ path("select") }}" method="post">
+            <p>
+                <label for="email">Veuillez entrer votre adresse email : </label>
+                <input type="email" name="email" id="email" /> 
+            </p>
+            <p>
+                <label for="nbBillets">Choisissez le nombre de billets à acheter : </label>
+                <select name="nbBillets" id="nbBillets">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+        </form>
+    </div>
+    <!-- ************************* -->
+
+    <!-- Méthode CommandeType -->
+    {# <div>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div> #}
+    <!-- ************************* -->
+
+{% endblock %}

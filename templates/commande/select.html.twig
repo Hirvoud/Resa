@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello{% endblock %}
+
+{% block body %}
+
+    <h1>Sélection des billets</h1>
+
+    {{ form_start(form) }}
+        <ul>
+            {% for billet in form.billets  %}
+                <li>{{ form_row(billet) }}</li>
+            {% endfor %}
+        </ul>
+    {{ form_end(form) }}
+
+
+{% endblock %}
