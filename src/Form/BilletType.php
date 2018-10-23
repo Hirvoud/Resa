@@ -16,8 +16,6 @@ class BilletType extends AbstractType
             ->add('nom')
             ->add('pays')
             ->add('dateNaissance')
-            ->add('tarif')
-            ->add('commande')
         ;
     }
 

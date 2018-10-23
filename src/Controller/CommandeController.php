@@ -36,16 +36,20 @@ class CommandeController extends AbstractController
         $_SESSION["email"] = $_POST["email"];
         $_SESSION["nbBillets"] = $_POST["nbBillets"];
 
-        dump($_SESSION);
-
         $commande = new Commande();
+        $random = uniqid("clvr", true);
 
-        $billet1 = new Billet();
-        $billet1->setNom("Ernest");
-        $commande->addBillet($billet1);
-        $billet2 = new Billet();
-        $billet2->setNom("Pépito");
-        $commande->addBillet($billet2);
+        $commande->setNumCommande($random);
+        $commande->setEmail($_SESSION["email"]);
+
+        $commande->setNbBillets($_SESSION["nbBillets"]);
+
+        $nbBillets = $commande->getNbBillets();
+
+        for( $i = 1; $i<=$nbBillets; $i++ ) {
+            $billet[$i] = new Billet();
+            $commande->addBillet($billet[$i]);
+        }
 
         dump($commande);
 

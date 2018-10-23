@@ -43,6 +43,11 @@ class Commande
      */
     private $billets;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbBillets;
+
     public function __construct()
     {
         $this->billets = new ArrayCollection();
@@ -128,6 +133,18 @@ class Commande
                 $billet->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbBillets(): ?int
+    {
+        return $this->nbBillets;
+    }
+
+    public function setNbBillets(int $nbBillets): self
+    {
+        $this->nbBillets = $nbBillets;
 
         return $this;
     }
