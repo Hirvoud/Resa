@@ -42,7 +42,7 @@ class Billet
     private $tarif;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Commande", inversedBy="billets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Commande", inversedBy="billets", cascade={"persist"})
      */
     private $commande;
 

@@ -48,6 +48,11 @@ class Commande
      */
     private $nbBillets;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $typeVisite;
+
     public function __construct()
     {
         $this->billets = new ArrayCollection();
@@ -145,6 +150,18 @@ class Commande
     public function setNbBillets(int $nbBillets): self
     {
         $this->nbBillets = $nbBillets;
+
+        return $this;
+    }
+
+    public function getTypeVisite(): ?string
+    {
+        return $this->typeVisite;
+    }
+
+    public function setTypeVisite(string $typeVisite): self
+    {
+        $this->typeVisite = $typeVisite;
 
         return $this;
     }
