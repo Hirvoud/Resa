@@ -29,7 +29,7 @@ class Commande
     private $dateVisite;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $prixTotal;
 
@@ -39,7 +39,7 @@ class Commande
     private $numCommande;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Billet", mappedBy="commande")
+     * @ORM\OneToMany(targetEntity="App\Entity\Billet", mappedBy="commande", cascade={"persist"})
      */
     private $billets;
 

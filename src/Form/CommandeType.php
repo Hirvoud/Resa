@@ -19,7 +19,9 @@ class CommandeType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('dateVisite', DateType::class, array(
-                "widget" => "choice",
+                "widget" => "single_text",
+                "html5" => false,
+                "years" => range(date("Y"), date("Y")+1)
             ))
             ->add('prixTotal')
             ->add('numCommande')

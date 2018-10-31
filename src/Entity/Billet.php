@@ -46,6 +46,11 @@ class Billet
      */
     private $commande;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $reduit;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,18 @@ class Billet
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getReduit(): ?bool
+    {
+        return $this->reduit;
+    }
+
+    public function setReduit(bool $reduit): self
+    {
+        $this->reduit = $reduit;
 
         return $this;
     }

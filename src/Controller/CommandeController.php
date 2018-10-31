@@ -57,11 +57,13 @@ class CommandeController extends AbstractController
 
         $commande = $request->getSession()->get("commande");
 
-        $random = uniqid("clvr");
+        $random = uniqid("lv");
 
         $commande->setNumCommande($random);
 
-        $commande->setPrixTotal(0);
+        dump($commande);
+
+        //$commande->setPrixTotal(0);
 
         $orderForm = $this->createForm(CommandeType::class, $commande);
         $orderForm->handleRequest($request);
@@ -84,13 +86,22 @@ class CommandeController extends AbstractController
     /**
      * @Route("/confirmation", name="confirm")
      */
-    public function confirm(Request $request, PriceCalculator $calculator)
+    public function confirm(Request $request, PriceCalculator $calculator, ObjectManager $manager)
     {
         $commande = $request->getSession()->get("commande");
 
-        $calculator->ageCheck($commande);
+        $prixTotal = $calculator->ageCheck($commande);
 
-        return $this->render("commande/confirm.html.twig");
+        $commande->setPrixTotal($prixTotal);
+
+        dump($commande);
+
+        $manager->persist($commande);
+        $manager->flush();
+
+        return $this->render("commande/confirm.html.twig", array(
+            "tarif" => $commande->getPrixTotal()
+        ));
     }
 
 }

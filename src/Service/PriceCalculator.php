@@ -22,6 +22,8 @@ class PriceCalculator
 
         $billets = $commande->getBillets();
 
+        $prixTotal = 0;
+
         foreach ($billets as $billet) {
             $dateNaissance = $billet->getDateNaissance();
             $today = new \DateTime();
@@ -29,22 +31,32 @@ class PriceCalculator
             $age = $diff->format("%y");
 
             switch ($age) {
-                case $age < 4:
+                case $age <= 4:
                     $billet->setTarif(self::GRATUIT);
                     break;
                 case $age < 12:
                     $billet->setTarif(self::ENFANT);
                     break;
-                case $age > 60:
+                case $age >= 60:
                     $billet->setTarif(self::SENIOR);
                     break;
                 case $age > 18:
-                    $billet->setTarif(self::REDUIT);
+                    $billet->setTarif(self::NORMAL);
                     break;
             }
 
+            if($billet->getReduit() == true) {
+                $billet->setTarif(self::REDUIT);
+            }
+
+            $prixTotal += $billet->getTarif();
         }
 
+        if ($commande->getTypeVisite() == "dj") {
+            $prixTotal = $prixTotal/2;
+        }
+
+        return $prixTotal;
 
     }
 
