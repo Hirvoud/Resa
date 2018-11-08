@@ -18,20 +18,26 @@ class PriceCalculator
     const SENIOR = 12;
     const REDUIT = 10;
 
-    public function ageCheck(Commande $commande) {
+    public function ageCheck(Commande $commande)
+    {
 
         $billets = $commande->getBillets();
 
         $prixTotal = 0;
 
         foreach ($billets as $billet) {
-            $dateNaissance = $billet->getDateNaissance();
-            $today = new \DateTime();
-            $diff = date_diff($dateNaissance, $today);
-            $age = $diff->format("%y");
+            $age = $billet->getVisitAge();
+
+//            if($age < 4){
+//
+//            }elseif($age < 12){
+//
+//            }elseif ()
+
 
             switch ($age) {
                 case $age <= 4:
+                    //$prixBillet = self::GRATUIT;
                     $billet->setTarif(self::GRATUIT);
                     break;
                 case $age < 12:
@@ -45,15 +51,20 @@ class PriceCalculator
                     break;
             }
 
-            if($billet->getReduit() == true) {
+            //TODO diviser le prix du billet en cas de demi-journee
+
+
+            // TODO gerer les cas < 12ans
+            if ($billet->getReduit() == true) {
                 $billet->setTarif(self::REDUIT);
             }
 
+            //$billet->setTarif($prixBillet);
             $prixTotal += $billet->getTarif();
         }
 
         if ($commande->getTypeVisite() == "dj") {
-            $prixTotal = $prixTotal/2;
+            $prixTotal = $prixTotal / 2;
         }
 
         return $prixTotal;

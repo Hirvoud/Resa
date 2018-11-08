@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme orderForm "bootstrap_4_layout.html.twig" %}
+
 {% block body %}
 
     <div class="col-lg-12">
@@ -15,12 +17,14 @@
     </div>
 
     <div class="col-lg-6">
-        {{ form_start(form) }}
+        {{ form_start(orderForm) }}
+            <label for="">Email</label>{{ form_widget(orderForm.email) }}<br />
+            <label for="">Date</label>{{ form_widget(orderForm.dateVisite, {"id":"datepicker"}) }}<br />
 
-            {# refaire le formulaire élément par élément #}
-            {{ form_widget(form.dateVisite, {"id":"datepicker"}) }}
-            {{ form_rest(form) }}
-        {{ form_end(form) }}
+            <label for="">Nombre de billets</label>{{ form_widget(orderForm.nbBillets) }}<br />
+            <label for="">Type de visite</label>{{ form_widget(orderForm.typeVisite) }}<br />
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        {{ form_end(orderForm) }}
     </div>
 
 

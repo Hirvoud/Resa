@@ -20,11 +20,9 @@ class CommandeType extends AbstractType
             ->add('email', EmailType::class)
             ->add('dateVisite', DateType::class, array(
                 "widget" => "single_text",
-                "html5" => false,
-                "years" => range(date("Y"), date("Y")+1)
+                "years" => range(date("Y"), date("Y")+1),
+                "html5" => false
             ))
-            ->add('prixTotal')
-            ->add('numCommande')
             ->add("nbBillets", ChoiceType::class, array(
                 "choices" => array(
                     "1" => 1,
@@ -40,18 +38,7 @@ class CommandeType extends AbstractType
                     "Journée" => "j",
                     "Demi-journée" => "dj"
                 )
-            ))
-            ->add("billets", CollectionType::class, array(
-                "entry_type" => BilletType::class,
-                "entry_options" => array("label" => false),
-                "allow_add" => true,
-            ))
-            ->add("save", SubmitType::class, [
-                "label" => "Valider",
-                "attr" => [
-                    "class" => "btn btn-primary"
-                ]
-            ]);
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

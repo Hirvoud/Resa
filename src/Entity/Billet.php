@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BilletRepository")
+ *
  */
 class Billet
 {
@@ -18,11 +20,13 @@ class Billet
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 2)
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * * @Assert\Length(min = 2)
      */
     private $nom;
 
@@ -42,6 +46,7 @@ class Billet
     private $tarif;
 
     /**
+     * @var Commande|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Commande", inversedBy="billets", cascade={"persist"})
      */
     private $commande;
@@ -138,5 +143,11 @@ class Billet
         $this->reduit = $reduit;
 
         return $this;
+    }
+
+
+    public function getVisitAge()
+    {
+        return $this->getDateNaissance()->diff($this->getCommande()->getDateVisite())->y;
     }
 }

@@ -7,7 +7,7 @@ function DisableDays(date) {
     var currentDate = d + "-" + (m + 1);
     var day = date.getDay();
 
-    if (day == 2) {
+    if (day === 2 || day === 0) {
         return [false];
     }
 
@@ -23,5 +23,5 @@ function DisableDays(date) {
 $("#datepicker").datepicker({
     minDate: 0,
     beforeShowDay: DisableDays,
-    dateFormat: "dd-mm-yy"
+    dateFormat: "yy-mm-dd"
 });

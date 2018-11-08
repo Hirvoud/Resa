@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Billet;
 use App\Entity\Commande;
+use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
 use App\Service\PriceCalculator;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,9 +23,6 @@ class CommandeController extends AbstractController
         $commande = new Commande();
 
         $form = $this->createForm(CommandeType::class, $commande);
-        $form->remove("numCommande");
-        $form->remove("prixTotal");
-        $form->remove("billets");
         $form->handleRequest($request);
 
 
@@ -45,7 +43,7 @@ class CommandeController extends AbstractController
         }
 
         return $this->render('commande/index.html.twig', array(
-            "form" => $form->createView(),
+            "orderForm" => $form->createView(),
         ));
     }
 
@@ -57,15 +55,13 @@ class CommandeController extends AbstractController
 
         $commande = $request->getSession()->get("commande");
 
-        $random = uniqid("lv");
+        $random = uniqid();
 
         $commande->setNumCommande($random);
 
         dump($commande);
 
-        //$commande->setPrixTotal(0);
-
-        $orderForm = $this->createForm(CommandeType::class, $commande);
+        $orderForm = $this->createForm(CommandeBilletsType::class, $commande);
         $orderForm->handleRequest($request);
 
         if ($orderForm->isSubmitted() && $orderForm->isValid()) {
@@ -75,11 +71,12 @@ class CommandeController extends AbstractController
 
             $session->set("commande", $commande);
 
+
             return $this->redirectToRoute("confirm");
         }
 
         return $this->render("commande/select.html.twig", array(
-            "orderForm" => $orderForm->createView(),
+            "ticketForm" => $orderForm->createView(),
         ));
     }
 
@@ -96,12 +93,45 @@ class CommandeController extends AbstractController
 
         dump($commande);
 
-        $manager->persist($commande);
-        $manager->flush();
-
         return $this->render("commande/confirm.html.twig", array(
             "tarif" => $commande->getPrixTotal()
         ));
+    }
+
+    /**
+     * @Route("/paiement", name="pay")
+     */
+    public function pay()
+    {
+        return $this->render("commande/pay.html.twig");
+    }
+
+    /**
+     * @Route("checkout", name="checkout")
+     */
+    public function checkout()
+    {
+        \Stripe\Stripe::setApiKey("sk_test_h4P4REIB1QPxd4do9NfhOn1h");
+
+        // Get the credit card details submitted by the form
+        $token = $_POST['stripeToken'];
+
+        // Create a charge: this will charge the user's card
+        try {
+            $charge = \Stripe\Charge::create(array(
+                "amount" => 800, // Amount in cents
+                "currency" => "eur",
+                "source" => $token,
+                "description" => "Musée Louvre test - OC"
+            ));
+            $this->addFlash("success","Bravo ça marche !");
+            return $this->redirectToRoute("pay");
+        } catch(\Stripe\Error\Card $e) {
+
+            $this->addFlash("error","Snif ça marche pas :(");
+            return $this->redirectToRoute("pay");
+            // The card has been declined
+        }
     }
 
 }

@@ -1,21 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% form_theme orderForm "bootstrap_4_layout.html.twig" %}
+{% form_theme ticketForm "bootstrap_4_layout.html.twig" %}
 
 {% block body %}
 
     <h1>Sélection des billets</h1>
 
-    {{ form_start(orderForm) }}
+    {{ form_start(ticketForm) }}
         <div class="row">
-            {% for billet in orderForm.billets  %}
+            {% for billet in ticketForm.billets  %}
                 <div class="col-lg-4">{{ form_row(billet) }}</div>
             {% endfor %}
         </div>
 
-        {{ form_row(orderForm.save) }}
-        {{ form_widget(orderForm, {"attr":{"style":"display:none"}}) }}
-    {{ form_end(orderForm) }}
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(ticketForm) }}
 
 
 {% endblock %}
