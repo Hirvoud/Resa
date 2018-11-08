@@ -18,7 +18,7 @@ class PriceCalculator
     const SENIOR = 12;
     const REDUIT = 10;
 
-    public function ageCheck(Commande $commande)
+    public function priceCheck(Commande $commande)
     {
 
         $billets = $commande->getBillets();
@@ -27,47 +27,32 @@ class PriceCalculator
 
         foreach ($billets as $billet) {
             $age = $billet->getVisitAge();
+            $prixBillet = 0;
 
-//            if($age < 4){
-//
-//            }elseif($age < 12){
-//
-//            }elseif ()
-
-
-            switch ($age) {
-                case $age <= 4:
-                    //$prixBillet = self::GRATUIT;
-                    $billet->setTarif(self::GRATUIT);
-                    break;
-                case $age < 12:
-                    $billet->setTarif(self::ENFANT);
-                    break;
-                case $age >= 60:
-                    $billet->setTarif(self::SENIOR);
-                    break;
-                case $age > 18:
-                    $billet->setTarif(self::NORMAL);
-                    break;
+            if($age < 4){
+                $prixBillet = self::GRATUIT;
+            }elseif($age < 12){
+                $prixBillet = self::ENFANT;
+            }elseif ($age >= 60){
+                $prixBillet = self::SENIOR;
+            }elseif ($age > 12){
+                $prixBillet = self::NORMAL;
             }
 
-            //TODO diviser le prix du billet en cas de demi-journee
-
-
-            // TODO gerer les cas < 12ans
-            if ($billet->getReduit() == true) {
-                $billet->setTarif(self::REDUIT);
+            if($billet->getReduit() === true  && $age > 12) {
+                $prixBillet = self::REDUIT;
             }
 
-            //$billet->setTarif($prixBillet);
-            $prixTotal += $billet->getTarif();
+
+            if($commande->getTypeVisite() == "dj") {
+                $prixBillet = $prixBillet / 2;
+            }
+
+            $billet->setTarif($prixBillet);
+            $prixTotal += $prixBillet;
         }
 
-        if ($commande->getTypeVisite() == "dj") {
-            $prixTotal = $prixTotal / 2;
-        }
-
-        return $prixTotal;
+        $commande->setPrixTotal($prixTotal);
 
     }
 

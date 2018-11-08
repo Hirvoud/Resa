@@ -87,9 +87,8 @@ class CommandeController extends AbstractController
     {
         $commande = $request->getSession()->get("commande");
 
-        $prixTotal = $calculator->ageCheck($commande);
-
-        $commande->setPrixTotal($prixTotal);
+        $calculator->priceCheck($commande);
+        //TODO renommer fonction ageCheck
 
         dump($commande);
 
