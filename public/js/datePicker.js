@@ -21,7 +21,7 @@ function DisableDays(date) {
 
 
 $("#datepicker").datepicker({
-    minDate: 0,
+    //minDate: 0,
     beforeShowDay: DisableDays,
     dateFormat: "yy-mm-dd"
 });
