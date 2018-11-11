@@ -151,7 +151,7 @@ class CommandeController extends AbstractController
 
             $mail = (new \Swift_Message("Commande confirmée"))
                 ->setFrom("jy.trsh@gmail.com")
-                ->setTo("anfauglith@gmail.com")
+                ->setTo("jy.trsh@gmail.com")
                 ->setBody(
                     $this->renderView(
                     // templates/emails/registration.html.twig
@@ -164,6 +164,8 @@ class CommandeController extends AbstractController
             ;
 
             $mailer->send($mail);
+
+            //TODO Mettre en forme le corps du mail
 
             return $this->redirectToRoute("success");
         } catch(\Stripe\Error\Card $e) {
