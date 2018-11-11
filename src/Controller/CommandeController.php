@@ -26,7 +26,7 @@ class CommandeController extends AbstractController
         $form->handleRequest($request);
 
 
-        if($form->isSubmitted()) {
+        if($form->isSubmitted() && $form->isValid()) {
 
             $nbBillets = $commande->getNbBillets();
 
@@ -52,6 +52,8 @@ class CommandeController extends AbstractController
      */
     public function select(Request $request)
     {
+
+        
 
         $commande = $request->getSession()->get("commande");
 
@@ -83,52 +85,66 @@ class CommandeController extends AbstractController
     /**
      * @Route("/confirmation", name="confirm")
      */
-    public function confirm(Request $request, PriceCalculator $calculator, ObjectManager $manager)
+    public function confirm(Request $request, PriceCalculator $calculator)
     {
-        $commande = $request->getSession()->get("commande");
+        $session = $request->getSession();
+
+        $commande = $session->get("commande");
 
         $calculator->priceCheck($commande);
-        //TODO renommer fonction ageCheck
 
         dump($commande);
 
+        $session->set("commande", $commande);
+
         return $this->render("commande/confirm.html.twig", array(
-            "tarif" => $commande->getPrixTotal()
-        ));
+            "prixTotal" => $commande->getPrixTotal(),
+            "stripe_key" => getenv("STRIPE_PK_KEY"),
+            "email" => $commande->getEmail()
+    ));
     }
 
     /**
-     * @Route("/paiement", name="pay")
+     * @Route("/succes", name="success")
      */
-    public function pay()
+    public function success()
     {
-        return $this->render("commande/pay.html.twig");
+        return $this->render("commande/success.html.twig");
     }
 
     /**
      * @Route("checkout", name="checkout")
      */
-    public function checkout()
+    public function checkout(Request $request, ObjectManager $manager)
     {
-        \Stripe\Stripe::setApiKey("sk_test_h4P4REIB1QPxd4do9NfhOn1h");
+        \Stripe\Stripe::setApiKey(getenv("STRIPE_SK_KEY"));
 
         // Get the credit card details submitted by the form
         $token = $_POST['stripeToken'];
 
+        $session = $request->getSession();
+
+        $commande = $session->get("commande");
+
+        $prixTotal = $commande->getPrixTotal();
+
         // Create a charge: this will charge the user's card
         try {
             $charge = \Stripe\Charge::create(array(
-                "amount" => 800, // Amount in cents
+                "amount" => $prixTotal * 100, // Amount in cents
                 "currency" => "eur",
                 "source" => $token,
-                "description" => "Musée Louvre test - OC"
+                "description" => "Commande n° " . $commande->getNumCommande() . "."
             ));
-            $this->addFlash("success","Bravo ça marche !");
-            return $this->redirectToRoute("pay");
+
+            $manager->persist($commande);
+            $manager->flush();
+
+            return $this->redirectToRoute("success");
         } catch(\Stripe\Error\Card $e) {
 
-            $this->addFlash("error","Snif ça marche pas :(");
-            return $this->redirectToRoute("pay");
+            return $this->redirectToRoute("confirm");
+            //return $this->redirectToRoute("error")
             // The card has been declined
         }
     }

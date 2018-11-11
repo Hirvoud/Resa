@@ -5,7 +5,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class DateValidator extends ConstraintValidator
+class DateVisiteValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
@@ -15,13 +15,11 @@ class DateValidator extends ConstraintValidator
 
         $currentDate = new \DateTime();
 
-        if($currentDate->diff($value) < "0") {
+        if($currentDate->diff($value)->invert == 1) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()
             ;
         }
-
-        // TODO: implémenter une méthode de validation correcte.
     }
 }

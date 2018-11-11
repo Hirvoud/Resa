@@ -27,7 +27,7 @@ class Commande
 
     /**
      * @ORM\Column(type="datetime")
-     * @MyAssert\Date
+     * @MyAssert\DateVisite
      */
     private $dateVisite;
 

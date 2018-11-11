@@ -2,8 +2,29 @@
 
 {% block body %}
 
-    <h1>Confirmation des billets</h1>
 
-    <p>Le prix total de la commande est de {{ tarif }} euros.</p>
+    <div class="col-lg-12">
+        <h1>Billetterie du Musée du Louvre</h1>
+    </div>
+
+    <h2>Confirmation des billets</h2>
+
+    <div>
+        <p>Votre commande s'élève à {{ prixTotal }} euros.</p>
+        <p>Veuillez cliquer sur le lien suivant pour procéder au paiement.</p>
+        <form action="{{ path('checkout') }}" method="POST">
+            <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key={{ stripe_key }}
+                    data-amount="{{ prixTotal * 100 }}"
+                    data-name="Billetterie du Louvre"
+                    data-description="Paiement"
+                    data-email="{{ email }}"
+                    data-locale="auto"
+                    data-currency="eur"
+                    data-label="Payer par carte">
+            </script>
+        </form>
+    </div>
 
 {% endblock %}
