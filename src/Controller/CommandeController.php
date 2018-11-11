@@ -25,7 +25,6 @@ class CommandeController extends AbstractController
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
-
         if($form->isSubmitted() && $form->isValid()) {
 
             $nbBillets = $commande->getNbBillets();
@@ -52,10 +51,20 @@ class CommandeController extends AbstractController
      */
     public function select(Request $request)
     {
-
-        
-
         $commande = $request->getSession()->get("commande");
+
+        $date = $commande->getDateVisite();
+
+        dump($date);
+
+        $limiteBillets = $this  ->getDoctrine()
+                                ->getRepository(Commande::class)
+                                ->findBy(
+                                    ["dateVisite" => $date]
+                    //TODO Affiner la recherche du nombre de billets en BDD
+                                );
+
+        dump($limiteBillets);
 
         $random = uniqid();
 
@@ -115,7 +124,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("checkout", name="checkout")
      */
-    public function checkout(Request $request, ObjectManager $manager)
+    public function checkout(Request $request, ObjectManager $manager, \Swift_Mailer $mailer)
     {
         \Stripe\Stripe::setApiKey(getenv("STRIPE_SK_KEY"));
 
@@ -139,6 +148,22 @@ class CommandeController extends AbstractController
 
             $manager->persist($commande);
             $manager->flush();
+
+            $mail = (new \Swift_Message("Commande confirmée"))
+                ->setFrom("jy.trsh@gmail.com")
+                ->setTo("anfauglith@gmail.com")
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/registration.html.twig
+                        'commande/email.html.twig',
+                        array("name" => $commande->getEmail(),
+                            "number" => $commande->getNumCommande())
+                    ),
+                    'text/html'
+                )
+            ;
+
+            $mailer->send($mail);
 
             return $this->redirectToRoute("success");
         } catch(\Stripe\Error\Card $e) {

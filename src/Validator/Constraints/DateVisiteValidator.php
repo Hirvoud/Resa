@@ -17,9 +17,21 @@ class DateVisiteValidator extends ConstraintValidator
 
         if($currentDate->diff($value)->invert == 1) {
             $this->context
-                ->buildViolation($constraint->message)
+                ->buildViolation($constraint->messAnt)
                 ->addViolation()
             ;
         }
+
+        $visitDay = $value->format("D");
+
+        if($visitDay == "Sun" || $visitDay == "Tue") {
+            $this->context
+                ->buildViolation($constraint->messJour)
+                ->addViolation()
+            ;
+        }
+
+        //TODO Ajouter contraintes pour les jours fériés
+
     }
 }

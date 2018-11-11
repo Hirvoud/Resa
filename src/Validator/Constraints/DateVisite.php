@@ -10,5 +10,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class DateVisite extends Constraint
 {
-    public $message = "Vous ne pouvez pas réserver pour une date antérieure à la date actuelle.";
+    public $messAnt = "Vous ne pouvez pas réserver pour une date antérieure à la date actuelle.";
+    public $messJour = "Vous ne pouvez pas réserver de place les mardi et dimanche.";
 }

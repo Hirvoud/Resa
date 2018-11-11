@@ -21,7 +21,9 @@ class CommandeType extends AbstractType
             ->add('dateVisite', DateType::class, array(
                 "widget" => "single_text",
                 "years" => range(date("Y"), date("Y")+1),
-                "html5" => false
+                "html5" => false,
+
+
             ))
             ->add("nbBillets", ChoiceType::class, array(
                 "choices" => array(

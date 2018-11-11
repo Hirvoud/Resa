@@ -1,4 +1,4 @@
-var nationalDays = ["3-12", "12-12", "26-12"];
+var nationalDays = ["1-1", "1-5", "8-5", "14-7", "15-8", "1-11", "11-11", "25-12"];
 
 
 function DisableDays(date) {
@@ -21,7 +21,7 @@ function DisableDays(date) {
 
 
 $("#datepicker").datepicker({
-    //minDate: 0,
+    minDate: 0,
     beforeShowDay: DisableDays,
     dateFormat: "yy-mm-dd"
 });
