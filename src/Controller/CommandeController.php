@@ -7,6 +7,7 @@ use App\Entity\Commande;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
 use App\Service\Mailing;
+use App\Service\Payment;
 use App\Service\PriceCalculator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -131,32 +132,16 @@ class CommandeController extends AbstractController
     /**
      * @Route("checkout", name="checkout")
      */
-    public function checkout(Request $request)
+    public function checkout(Request $request, Payment $payment)
     {
         $commande = $request->getSession()->get("commande");
 
-        $prixTotal = $commande->getPrixTotal();
+        $checkout = $payment->Pay($commande, $request);
 
-        \Stripe\Stripe::setApiKey($this->getParameter("stripe_private_key"));
-
-        // Get the credit card details submitted by the form
-        $token = $request->request->get('stripeToken');
-
-        // Create a charge: this will charge the user's card
-        try {
-            $charge = \Stripe\Charge::create(array(
-                "amount" => $prixTotal * 100, // Amount in cents
-                "currency" => "eur",
-                "source" => $token,
-                "description" => "Commande n° " . $commande->getNumCommande() . "."
-            ));
-
+        if ($checkout == true) {
             return $this->redirectToRoute("success");
-        } catch(\Stripe\Error\Card $e) {
-
+        } else {
             return $this->redirectToRoute("confirm");
-            //return $this->redirectToRoute("error")
-            // The card has been declined
         }
     }
 
