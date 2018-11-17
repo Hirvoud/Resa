@@ -6,6 +6,7 @@ use App\Entity\Billet;
 use App\Entity\Commande;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
+use App\Service\Mailing;
 use App\Service\PriceCalculator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,11 +22,14 @@ class CommandeController extends AbstractController
     public function index(Request $request)
     {
         $commande = new Commande();
+        //$cManager = new CommandeManager();
 
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            //$cManager->CreationBillets($commande->getNbBillets());
 
             $nbBillets = $commande->getNbBillets();
 
@@ -55,19 +59,12 @@ class CommandeController extends AbstractController
 
         $date = $commande->getDateVisite();
 
-        dump($date);
-
         $limiteBillets = $this  ->getDoctrine()
                                 ->getRepository(Commande::class)
-                                ->findBy(
-                                    ["dateVisite" => $date]
-                    //TODO Affiner la recherche du nombre de billets en BDD
-                                );
+                                ->countBilletsForDate($date);
 
-        dump($limiteBillets);
-
-        $random = uniqid();
-
+        $random = strtoupper(uniqid());
+        //TODO Construire un numéro de commande
         $commande->setNumCommande($random);
 
         dump($commande);
@@ -108,7 +105,7 @@ class CommandeController extends AbstractController
 
         return $this->render("commande/confirm.html.twig", array(
             "prixTotal" => $commande->getPrixTotal(),
-            "stripe_key" => getenv("STRIPE_PK_KEY"),
+            "stripe_key" => $this->getParameter("stripe_public_key"),
             "email" => $commande->getEmail()
     ));
     }
@@ -116,26 +113,34 @@ class CommandeController extends AbstractController
     /**
      * @Route("/succes", name="success")
      */
-    public function success()
+    public function success(Request $request, ObjectManager $manager, Mailing $mailing)
     {
-        return $this->render("commande/success.html.twig");
+        $commande = $request->getSession()->get("commande");
+
+        $manager->persist($commande);
+        $manager->flush();
+
+        $mailing->SendMail($commande);
+
+        //TODO Mettre en forme le corps du mail
+        return $this->render("commande/success.html.twig", array(
+            "email" => $commande->getEmail()
+        ));
     }
 
     /**
      * @Route("checkout", name="checkout")
      */
-    public function checkout(Request $request, ObjectManager $manager, \Swift_Mailer $mailer)
+    public function checkout(Request $request)
     {
-        \Stripe\Stripe::setApiKey(getenv("STRIPE_SK_KEY"));
-
-        // Get the credit card details submitted by the form
-        $token = $_POST['stripeToken'];
-
-        $session = $request->getSession();
-
-        $commande = $session->get("commande");
+        $commande = $request->getSession()->get("commande");
 
         $prixTotal = $commande->getPrixTotal();
+
+        \Stripe\Stripe::setApiKey($this->getParameter("stripe_private_key"));
+
+        // Get the credit card details submitted by the form
+        $token = $request->request->get('stripeToken');
 
         // Create a charge: this will charge the user's card
         try {
@@ -145,27 +150,6 @@ class CommandeController extends AbstractController
                 "source" => $token,
                 "description" => "Commande n° " . $commande->getNumCommande() . "."
             ));
-
-            $manager->persist($commande);
-            $manager->flush();
-
-            $mail = (new \Swift_Message("Commande confirmée"))
-                ->setFrom("jy.trsh@gmail.com")
-                ->setTo("jy.trsh@gmail.com")
-                ->setBody(
-                    $this->renderView(
-                    // templates/emails/registration.html.twig
-                        'commande/email.html.twig',
-                        array("name" => $commande->getEmail(),
-                            "number" => $commande->getNumCommande())
-                    ),
-                    'text/html'
-                )
-            ;
-
-            $mailer->send($mail);
-
-            //TODO Mettre en forme le corps du mail
 
             return $this->redirectToRoute("success");
         } catch(\Stripe\Error\Card $e) {

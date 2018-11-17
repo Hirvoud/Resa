@@ -19,6 +19,18 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+
+    public function countBilletsForDate(\DateTime $dateTime)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('SUM(c.nbBillets) as cpt')
+            ->andWhere('c.dateVisite = :date')
+            ->setParameter('date',$dateTime);
+
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Commande[] Returns an array of Commande objects
 //     */

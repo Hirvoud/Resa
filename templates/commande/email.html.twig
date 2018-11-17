@@ -2,14 +2,9 @@
 
 {% block body %}
 {# templates/emails/registration.html.twig #}
-<h3>You did it! You registered!</h3>
+<h3>Merci de votre commande !</h3>
 
-Hi {{ name }}! You're successfully registered.
-    Your order numbre is {{ number }}
-
-{# example, assuming you have a route named "login" #}
-To login, go to: <a href="{{ url("select") }}">...</a>.
-
-Thanks!
+Bonjour, votre commande numéro {{ number }} a été validée.
+Vous trouverez ci-joint un récapitulatif des billets achetés.
 
 {% endblock %}

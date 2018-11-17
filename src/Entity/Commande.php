@@ -27,7 +27,9 @@ class Commande
 
     /**
      * @ORM\Column(type="datetime")
-     * @MyAssert\DateVisite
+     * @MyAssert\NoPast
+     * @MyAssert\NoTuesday
+     * @MyAssert\NoSunday
      */
     private $dateVisite;
 
