@@ -31,6 +31,7 @@ class Commande
      * @MyAssert\NoTuesday
      * @MyAssert\NoSunday
      * @MyAssert\NotAfter14
+     * @MyAssert\NoHolidays
      */
     private $dateVisite;
 

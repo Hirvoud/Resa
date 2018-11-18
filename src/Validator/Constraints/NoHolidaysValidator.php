@@ -2,28 +2,26 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Commande;
+use App\Service\Holidays;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class FullCapacityValidator extends ConstraintValidator
+class NoHolidaysValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-
         if (null === $value || '' === $value) {
             return;
         }
 
-        $limiteBillets = $this->getDoctrine()
-            ->getRepository(Commande::class)
-            ->countBilletsForDate($value);
+        $holidays = new Holidays();
 
-        if($limiteBillets > 980) {
+        if($holidays->IsHoliday($value)) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()
             ;
         }
+
     }
 }
