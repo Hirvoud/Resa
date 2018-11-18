@@ -19,8 +19,11 @@ class Mailing
             ->setBody(
                 $this->template->render(
                     'commande/email.html.twig',
-                    array("name" => $commande->getEmail(),
-                        "number" => $commande->getNumCommande())
+                    array(  "name" => $commande->getEmail(),
+                            "numCom" => $commande->getNumCommande(),
+                            "prixTotal" => $commande->getPrixTotal(),
+                            "nbBillets" => $commande->getNbBillets()
+                    )
                 ),
                 'text/html'
             )

@@ -2,20 +2,22 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\Commande;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class NoPastValidator extends ConstraintValidator
+class NotAfter14Validator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (null === $value || '' === $value) {
-            return;
-        }
 
-        $currentDate = new \DateTime();
+        $dt = new \DateTime();
+        $today = $dt->format("d/M/y");
+        $visitDate = $value->format("d/M/y");
+        $hour = $dt->format("H");
 
-        if($currentDate->diff($value)->invert == 1) {
+
+        if($today == $visitDate && $hour > "14") {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()

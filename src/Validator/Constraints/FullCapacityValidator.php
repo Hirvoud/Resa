@@ -2,25 +2,24 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\Commande;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class NoPastValidator extends ConstraintValidator
+class FullCapacityValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (null === $value || '' === $value) {
-            return;
-        }
 
-        $currentDate = new \DateTime();
+        $limiteBillets = $this->getDoctrine()
+            ->getRepository(Commande::class)
+            ->countBilletsForDate($value);
 
-        if($currentDate->diff($value)->invert == 1) {
+        if($limiteBillets > 980) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()
             ;
         }
-
     }
 }

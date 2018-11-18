@@ -60,9 +60,7 @@ class CommandeController extends AbstractController
 
         $date = $commande->getDateVisite();
 
-        $limiteBillets = $this  ->getDoctrine()
-                                ->getRepository(Commande::class)
-                                ->countBilletsForDate($date);
+
 
         $random = strtoupper(uniqid());
         //TODO Construire un numéro de commande
