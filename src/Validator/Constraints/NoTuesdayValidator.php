@@ -21,8 +21,5 @@ class NoTuesdayValidator extends ConstraintValidator
                 ->addViolation()
             ;
         }
-
-        //TODO Ajouter contraintes pour les jours fériés
-
     }
 }

@@ -22,7 +22,5 @@ class NoSundayValidator extends ConstraintValidator
             ;
         }
 
-        //TODO Ajouter contraintes pour les jours fériés
-
     }
 }

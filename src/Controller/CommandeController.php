@@ -20,6 +20,14 @@ class CommandeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
+    public function home()
+    {
+        return $this->render("commande/index.html.twig");
+    }
+
+    /**
+     * @Route("/billetterie", name="order")
+     */
     public function index(Request $request)
     {
         $commande = new Commande();
@@ -46,7 +54,7 @@ class CommandeController extends AbstractController
             return $this->redirectToRoute("select");
         }
 
-        return $this->render('commande/index.html.twig', array(
+        return $this->render("commande/order.html.twig", array(
             "orderForm" => $form->createView(),
         ));
     }
@@ -63,7 +71,7 @@ class CommandeController extends AbstractController
 
 
         $random = strtoupper(uniqid());
-        //TODO Construire un numéro de commande
+
         $commande->setNumCommande($random);
 
         dump($commande);
@@ -121,7 +129,6 @@ class CommandeController extends AbstractController
 
         $mailing->SendMail($commande);
 
-        //TODO Mettre en forme le corps du mail
         return $this->render("commande/success.html.twig", array(
             "email" => $commande->getEmail()
         ));
@@ -143,4 +150,21 @@ class CommandeController extends AbstractController
         }
     }
 
+    /**
+     * @Route("erreur", name="error")
+     */
+    public function error()
+    {
+        return $this->render("commande/error.html.twig");
+    }
+
+    /**
+     * @Route("cancel", name="cancel")
+     */
+    public function cancel(Request $request)
+    {
+        $request->getSession()->clear();
+
+        return $this->redirectToRoute("home");
+    }
 }

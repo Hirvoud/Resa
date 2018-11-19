@@ -1,0 +1,29 @@
+body {
+    background-color: #ffaac1;
+}
+
+.main-title {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: lightskyblue;
+}
+
+.intro {
+    height: 350px;
+}
+
+.enter-order {
+    text-align: right;
+    padding-right: 50px;
+}
+
+.order-valid {
+    text-align: right;
+}
+
+.cancel {
+    text-align: left;
+    margin-top: 20px;
+}

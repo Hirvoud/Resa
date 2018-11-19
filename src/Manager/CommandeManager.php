@@ -23,7 +23,4 @@ class CommandeManager
         return null;
     }
 
-    public function a() {
-        return null;
-    }
 }

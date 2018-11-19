@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme orderForm "bootstrap_4_layout.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-title">
+                <h1>Billetterie du Musée du Louvre</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            {{ form_start(orderForm) }}
+                <label for="">Email</label>
+                    {{ form_widget(orderForm.email) }}<br />
+                <label for="">Date</label>
+                    {{ form_errors(orderForm.dateVisite) }}
+                    {{ form_widget(orderForm.dateVisite, {"id":"datepicker"}) }}<br />
+                <label for="">Nombre de billets</label>
+                    {{ form_widget(orderForm.nbBillets) }}<br />
+                <label for="">Type de visite</label>
+                    {{ form_widget(orderForm.typeVisite) }}<br />
+                <button type="submit" class="btn btn-primary order-valid">Enregistrer</button>
+            {{ form_end(orderForm) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 cancel">
+            <a href="{{ path("cancel") }}"><button class="btn btn-danger">Annuler</button></a>
+        </div>
+    </div>
+
+
+
+{% endblock %}
