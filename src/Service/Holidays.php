@@ -5,7 +5,11 @@ namespace App\Service;
 
 class Holidays
 {
-    public function IsHoliday($dt) {
+    /**
+     * @param \DateTime $dt
+     * @return bool
+     */
+    public function IsHoliday(\DateTime $dt) {
 
         $date = $dt->getTimestamp();
 

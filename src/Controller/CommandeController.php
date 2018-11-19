@@ -6,6 +6,7 @@ use App\Entity\Billet;
 use App\Entity\Commande;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
+use App\Manager\CommandeManager;
 use App\Service\Mailing;
 use App\Service\Payment;
 use App\Service\PriceCalculator;
@@ -27,29 +28,20 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/billetterie", name="order")
+     * @param Request $request
+     * @param CommandeManager $commandeManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, CommandeManager $commandeManager)
     {
-        $commande = new Commande();
-        //$cManager = new CommandeManager();
+        $commande = $commandeManager->initCommande();
 
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            //$cManager->CreationBillets($commande->getNbBillets());
-
-            $nbBillets = $commande->getNbBillets();
-
-            for ($i = 1; $i <= $nbBillets; $i++) {
-                $billet[$i] = new Billet();
-                $commande->addBillet($billet[$i]);
-            }
-
-            $session = $request->getSession();
-
-            $session->set("commande", $commande);
+            $commandeManager->creationBillets($commande);
 
             return $this->redirectToRoute("select");
         }
@@ -61,32 +53,19 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/selection", name="select")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function select(Request $request)
+    public function select(Request $request, CommandeManager $commandeManager)
     {
-        $commande = $request->getSession()->get("commande");
+        $commande = $commandeManager->getCurrentCommande();
 
-        $date = $commande->getDateVisite();
-
-
-
-        $random = strtoupper(uniqid());
-
-        $commande->setNumCommande($random);
-
-        dump($commande);
 
         $orderForm = $this->createForm(CommandeBilletsType::class, $commande);
         $orderForm->handleRequest($request);
 
         if ($orderForm->isSubmitted() && $orderForm->isValid()) {
-            $session = $request->getSession();
-
-            $commande = $orderForm->getData();
-
-            $session->set("commande", $commande);
-
-
+            $commandeManager->computePrice($commande);
             return $this->redirectToRoute("confirm");
         }
 
@@ -98,23 +77,16 @@ class CommandeController extends AbstractController
     /**
      * @Route("/confirmation", name="confirm")
      */
-    public function confirm(Request $request, PriceCalculator $calculator)
+    public function confirm(Request $request, CommandeManager $commandeManager)
     {
-        $session = $request->getSession();
-
-        $commande = $session->get("commande");
-
-        $calculator->priceCheck($commande);
+        $commande = $commandeManager->getCurrentCommande();
 
         dump($commande);
 
-        $session->set("commande", $commande);
-
         return $this->render("commande/confirm.html.twig", array(
             "prixTotal" => $commande->getPrixTotal(),
-            "stripe_key" => $this->getParameter("stripe_public_key"),
             "email" => $commande->getEmail()
-    ));
+        ));
     }
 
     /**
@@ -135,17 +107,18 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("checkout", name="checkout")
+     * @Route("checkout", name="checkout", methods={"POST"})
      */
     public function checkout(Request $request, Payment $payment)
     {
         $commande = $request->getSession()->get("commande");
 
-        $checkout = $payment->Pay($commande, $request);
+        $checkout = $payment->Pay($commande);
 
         if ($checkout == true) {
             return $this->redirectToRoute("success");
         } else {
+            //TODO Ajouter message flash
             return $this->redirectToRoute("confirm");
         }
     }

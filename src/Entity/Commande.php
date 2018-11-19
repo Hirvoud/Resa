@@ -22,16 +22,20 @@ class Commande
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotNull()
      * @MyAssert\NoPast
      * @MyAssert\NoTuesday
      * @MyAssert\NoSunday
      * @MyAssert\NotAfter14
      * @MyAssert\NoHolidays
+     * @Assert\GreaterThanOrEqual("today")
      */
     private $dateVisite;
 

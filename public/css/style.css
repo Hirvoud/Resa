@@ -1,5 +1,5 @@
 body {
-    background-color: #ffaac1;
+    background-color: lightgrey;
 }
 
 .main-title {
@@ -7,11 +7,8 @@ body {
     margin-bottom: 50px;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: lightskyblue;
-}
-
-.intro {
-    height: 350px;
+    background-color: black;
+    color: white;
 }
 
 .enter-order {
@@ -19,11 +16,12 @@ body {
     padding-right: 50px;
 }
 
-.order-valid {
-    text-align: right;
-}
-
 .cancel {
     text-align: left;
     margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: black !important;
+    border-color: black;
 }

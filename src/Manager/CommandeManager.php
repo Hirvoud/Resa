@@ -5,22 +5,70 @@ namespace App\Manager;
 
 use App\Entity\Billet;
 use App\Entity\Commande;
+use App\Service\PriceCalculator;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CommandeManager
 {
-    public function CreationBillets($nbBillets) {
+    const ID_SESSION_COMMANDE = 'commande';
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+    /**
+     * @var PriceCalculator
+     */
+    private $priceCalculator;
 
-        $commande = new Commande();
+    public function __construct(SessionInterface $session, PriceCalculator $priceCalculator)
+    {
+        $this->session = $session;
+        $this->priceCalculator = $priceCalculator;
+    }
 
-        for ($i = 1; $i <= $nbBillets; $i++) {
+
+    public function creationBillets(Commande $commande)
+    {
+
+
+        for ($i = 1; $i <= $commande->getNbBillets(); $i++) {
             $billet[$i] = new Billet();
             $commande->addBillet($billet[$i]);
         }
     }
 
-    public function NumCommande() {
+    public function generateOrderId(Commande $commande)
+    {
+        $random = strtoupper(uniqid());
 
-        return null;
+        $commande->setNumCommande($random);
     }
+
+    /**
+     * @return Commande
+     */
+    public function initCommande()
+    {
+
+        $commande = new Commande();
+
+        $this->session->set(self::ID_SESSION_COMMANDE, $commande);
+        return $commande;
+    }
+
+    /**
+     * @return Commande
+     */
+    public function getCurrentCommande()
+    {
+// TODO traiter les cas d'exceptions
+        return $this->session->get(self::ID_SESSION_COMMANDE);
+    }
+
+    public function computePrice(Commande $commande)
+    {
+        $this->priceCalculator->priceCheck($commande);
+    }
+
 
 }

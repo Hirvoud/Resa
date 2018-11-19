@@ -3,24 +3,31 @@
 namespace App\Service;
 
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Entity\Commande;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 
 class Payment
 {
-    private $params;
 
+    /**
+     * @var null|\Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+    private $private_key;
 
-    public function __construct(ParameterBagInterface $params) {
-        $this->params = $params;
+    public function __construct($stripePrivateKey, RequestStack $requestStack) {
+        $this->request = $requestStack->getCurrentRequest();
+        $this->private_key = $stripePrivateKey;
     }
 
 
-    public function Pay($commande, $request) {
+    public function Pay(Commande $commande, $request) {
 
-        \Stripe\Stripe::setApiKey($this->params->get("stripe_private_key"));
+        \Stripe\Stripe::setApiKey($this->private_key);
 
         // Get the credit card details submitted by the form
-        $token = $request->request->get('stripeToken');
+        $token = $this->request->get('stripeToken');
 
         // Create a charge: this will charge the user's card
         try {

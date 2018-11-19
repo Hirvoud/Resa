@@ -17,7 +17,7 @@ class NotAfter14Validator extends ConstraintValidator
         $hour = $dt->format("H");
 
 
-        if($today == $visitDate && $hour > "14") {
+        if($today == $visitDate && $hour >= 12) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()
