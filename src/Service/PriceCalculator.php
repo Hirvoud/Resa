@@ -12,6 +12,9 @@ class PriceCalculator
     const SENIOR = 12;
     const REDUIT = 10;
 
+    /**
+     * @param Commande $commande
+     */
     public function priceCheck(Commande $commande)
     {
 

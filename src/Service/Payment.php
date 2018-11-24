@@ -21,8 +21,11 @@ class Payment
         $this->private_key = $stripePrivateKey;
     }
 
-
-    public function Pay(Commande $commande, $request) {
+    /**
+     * @param Commande $commande
+     * @return bool
+     */
+    public function Pay(Commande $commande) {
 
         \Stripe\Stripe::setApiKey($this->private_key);
 

@@ -25,3 +25,8 @@ body {
     background-color: black !important;
     border-color: black;
 }
+
+.flash-notice {
+    color: red;
+    font-size: 1.7em;
+}

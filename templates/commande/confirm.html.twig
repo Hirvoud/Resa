@@ -10,11 +10,21 @@
         </div>
     </div>
 
-    <h2>Confirmation des billets</h2>
 
-    <div class="row">
+
+    <div>
+        <h2>Confirmation des billets</h2>
         <p>Votre commande s'élève à {{ prixTotal }} euros.</p>
         <p>Veuillez cliquer sur le lien suivant pour procéder au paiement.</p>
+    </div>
+
+    {% for message in app.flashes("error") %}
+        <div class="flash-notice">
+            {{ message }}<br />
+        </div>
+    {% endfor %}
+
+    <div>
         <form action="{{ path('checkout') }}" method="POST">
             <script
                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"

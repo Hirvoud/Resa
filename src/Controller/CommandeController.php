@@ -2,14 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Billet;
-use App\Entity\Commande;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
 use App\Manager\CommandeManager;
 use App\Service\Mailing;
-use App\Service\Payment;
-use App\Service\PriceCalculator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +50,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/selection", name="select")
      * @param Request $request
+     * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function select(Request $request, CommandeManager $commandeManager)
@@ -76,12 +73,19 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/confirmation", name="confirm")
+     * @param CommandeManager $commandeManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function confirm(Request $request, CommandeManager $commandeManager)
+    public function confirm(CommandeManager $commandeManager)
     {
         $commande = $commandeManager->getCurrentCommande();
 
         dump($commande);
+
+        $this->addFlash(
+            "test",
+            "Ceci est un test"
+        );
 
         return $this->render("commande/confirm.html.twig", array(
             "prixTotal" => $commande->getPrixTotal(),
@@ -91,10 +95,14 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/succes", name="success")
+     * @param CommandeManager $commandeManager
+     * @param ObjectManager $manager
+     * @param Mailing $mailing
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function success(Request $request, ObjectManager $manager, Mailing $mailing)
+    public function success(CommandeManager $commandeManager, ObjectManager $manager, Mailing $mailing)
     {
-        $commande = $request->getSession()->get("commande");
+        $commande = $commandeManager->getCurrentCommande();
 
         $manager->persist($commande);
         $manager->flush();
@@ -108,17 +116,22 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("checkout", name="checkout", methods={"POST"})
+     * @param CommandeManager $commandeManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function checkout(Request $request, Payment $payment)
+    public function checkout(CommandeManager $commandeManager)
     {
-        $commande = $request->getSession()->get("commande");
+        $commande = $commandeManager->getCurrentCommande();
 
-        $checkout = $payment->Pay($commande);
+        $checkout = $commandeManager->payment($commande);
 
         if ($checkout == true) {
             return $this->redirectToRoute("success");
         } else {
-            //TODO Ajouter message flash
+            $this->addFlash(
+                "error",
+                "Une erreur s'est produite durant le paiement. Veuillez réessayer s'il vous plaît."
+            );
             return $this->redirectToRoute("confirm");
         }
     }
@@ -133,6 +146,8 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("cancel", name="cancel")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function cancel(Request $request)
     {
