@@ -109,6 +109,8 @@ class CommandeController extends AbstractController
 
         $mailing->SendMail($commande);
 
+        dump($commande);
+
         return $this->render("commande/success.html.twig", array(
             "email" => $commande->getEmail()
         ));
@@ -122,6 +124,8 @@ class CommandeController extends AbstractController
     public function checkout(CommandeManager $commandeManager)
     {
         $commande = $commandeManager->getCurrentCommande();
+
+        $commandeManager->generateOrderId($commande);
 
         $checkout = $commandeManager->payment($commande);
 

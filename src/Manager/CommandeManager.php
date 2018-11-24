@@ -50,9 +50,11 @@ class CommandeManager
 
     public function generateOrderId(Commande $commande)
     {
-        $random = strtoupper(uniqid());
+        $uniq = strtoupper(uniqid());
 
-        $commande->setNumCommande($random);
+        $id = substr($uniq, 0, 4) . "-" . substr($uniq, 4, 4) . "-" . substr($uniq, 8, 3) . "-" . substr($uniq, 11, 2);
+
+        $commande->setNumCommande($id);
     }
 
     /**
