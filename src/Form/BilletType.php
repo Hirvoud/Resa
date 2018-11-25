@@ -15,16 +15,19 @@ class BilletType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('prenom', TextType::class)
+            ->add('prenom', TextType::class, array(
+                "label" => "Prénom"
+            ))
             ->add('nom', TextType::class)
             ->add('pays', TextType::class)
             ->add('dateNaissance', BirthdayType::class, array(
+                "label" => "Date de naissance",
                 "widget" => "choice",
                 "placeholder" => array("year" => "année", "month" => "mois", "day" => "jour"),
                 "years" => range(1930, date("Y"))
             ))
             ->add("reduit", CheckboxType::class, array(
-                "label" => "Tarif réduit",
+                "label" => "Tarif réduit*",
                 "required" => false
             ))
         ;

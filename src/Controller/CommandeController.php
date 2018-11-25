@@ -57,6 +57,9 @@ class CommandeController extends AbstractController
     {
         $commande = $commandeManager->getCurrentCommande();
 
+        if ($commande == false) {
+            return $this->redirectToRoute("error");
+        }
 
         $orderForm = $this->createForm(CommandeBilletsType::class, $commande);
         $orderForm->handleRequest($request);
@@ -80,7 +83,9 @@ class CommandeController extends AbstractController
     {
         $commande = $commandeManager->getCurrentCommande();
 
-        dump($commande);
+        if ($commande == false) {
+            return $this->redirectToRoute("error");
+        }
 
         $this->addFlash(
             "test",

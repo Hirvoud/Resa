@@ -1,10 +1,10 @@
-var nationalDays = ["1-1", "1-5", "8-5", "14-7", "15-8", "1-11", "11-11", "25-12", "22-4-2019"];
-
-
-function isCloseDay(date){
-    var nationalDays = ["1-1", "1-5", "8-5", "14-7", "15-8", "1-11", "11-11", "25-12"];
-    return !$.inArray(date.getDate() + "-" + (date.getMonth()+1), nationalDays);
-}
+// var nationalDays = ["1-1", "1-5", "8-5", "14-7", "15-8", "1-11", "11-11", "25-12", "22-4-2019"];
+//
+//
+// function isCloseDay(date){
+//     var nationalDays = ["1-1", "1-5", "8-5", "14-7", "15-8", "1-11", "11-11", "25-12"];
+//     return !$.inArray(date.getDate() + "-" + (date.getMonth()+1), nationalDays);
+// }
 
 function JoursFeries (an){
     var JourAn = new Date(an, "00", "01");
@@ -39,7 +39,7 @@ function isHolydays(date){
     var holidays = JoursFeries(date.getFullYear());
 
     holidays.forEach(function(elt){
-        if(elt.toDateString() == date.toDateString()){
+        if(elt.toDateString() === date.toDateString()){
             console.log(elt.toDateString(),date.toDateString(),date);
             return true;
         }
@@ -49,13 +49,11 @@ function isHolydays(date){
 }
 
 function DisableDays(date) {
-    if (isHolydays(date)) {
+    if (isHolydays(date) === true/* || date.getDay() === 2 ||date.getDay() === 0*/) {
         return [false];
     }
     return [true]
 }
-
-/*date.getDay() === 2 ||date.getDay() === 0 ||*/
 
 console.log(JoursFeries('2019'));
 

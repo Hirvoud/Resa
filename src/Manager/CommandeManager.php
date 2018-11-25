@@ -7,7 +7,6 @@ use App\Entity\Billet;
 use App\Entity\Commande;
 use App\Service\Payment;
 use App\Service\PriceCalculator;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -74,8 +73,23 @@ class CommandeManager
      */
     public function getCurrentCommande()
     {
-        // TODO traiter les cas d'exceptions
-        return $this->session->get(self::ID_SESSION_COMMANDE);
+        $cmd = $this->session->get(self::ID_SESSION_COMMANDE);
+        $commande = $this->testSession($cmd);
+
+        return $commande;
+    }
+
+    /**
+     * @param Commande $commande
+     * @return Commande|bool
+     */
+    public function testSession(Commande $commande)
+    {
+        if($commande->getEmail() == null || $commande->getNbBillets() == null || $commande->getNbBillets() == null || $commande->getDateVisite() == null || $commande->getTypeVisite() == null ) {
+            return false;
+        } else {
+            return $commande;
+        }
     }
 
     /**
