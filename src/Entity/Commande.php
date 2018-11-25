@@ -10,6 +10,8 @@ use App\Validator\Constraints as MyAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommandeRepository")
+ * @MyAssert\FullCapacity
+ * @MyAssert\NotAfter14
  */
 class Commande
 {
@@ -30,10 +32,8 @@ class Commande
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotNull()
-     * @MyAssert\NoPast
      * @MyAssert\NoTuesday
      * @MyAssert\NoSunday
-     * @MyAssert\NotAfter14
      * @MyAssert\NoHolidays
      * @Assert\GreaterThanOrEqual("today")
      */

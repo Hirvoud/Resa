@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BilletRepository")
- *
  */
 class Billet
 {

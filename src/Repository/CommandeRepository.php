@@ -20,13 +20,12 @@ class CommandeRepository extends ServiceEntityRepository
     }
 
 
-    public function countBilletsForDate(\DateTime $dateTime)
+    public function countBilletsForDate(\DateTimeInterface $dateTime)
     {
         $qb = $this->createQueryBuilder('c')
             ->select('SUM(c.nbBillets) as cpt')
             ->andWhere('c.dateVisite = :date')
             ->setParameter('date',$dateTime);
-
 
         return $qb->getQuery()->getSingleScalarResult();
     }

@@ -7,6 +7,7 @@ use App\Entity\Billet;
 use App\Entity\Commande;
 use App\Service\Payment;
 use App\Service\PriceCalculator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -87,10 +88,17 @@ class CommandeManager
         return $checkout;
     }
 
+    /**
+     * @param Commande $commande
+     */
     public function computePrice(Commande $commande)
     {
         $this->priceCalculator->priceCheck($commande);
     }
 
+    public function clearSession()
+    {
+        $this->session->clear();
+    }
 
 }

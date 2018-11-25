@@ -87,9 +87,11 @@ class CommandeController extends AbstractController
             "Ceci est un test"
         );
 
+        $billets = $commande->getBillets();
+
         return $this->render("commande/confirm.html.twig", array(
-            "prixTotal" => $commande->getPrixTotal(),
-            "email" => $commande->getEmail()
+            "commande" => $commande,
+            "billets" => $billets
         ));
     }
 
@@ -99,6 +101,9 @@ class CommandeController extends AbstractController
      * @param ObjectManager $manager
      * @param Mailing $mailing
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function success(CommandeManager $commandeManager, ObjectManager $manager, Mailing $mailing)
     {
@@ -150,12 +155,12 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("cancel", name="cancel")
-     * @param Request $request
+     * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function cancel(Request $request)
+    public function cancel(CommandeManager $commandeManager)
     {
-        $request->getSession()->clear();
+        $commandeManager->clearSession();
 
         return $this->redirectToRoute("home");
     }

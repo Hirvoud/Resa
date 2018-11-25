@@ -3,6 +3,12 @@
 namespace App\Service;
 
 
+use App\Entity\Commande;
+
+/**
+ * @property \Twig_Environment template
+ * @property \Swift_Mailer mailer
+ */
 class Mailing
 {
     public function __construct(\Swift_Mailer $mailer, \Twig_Environment $template)
@@ -11,7 +17,15 @@ class Mailing
         $this->template = $template;
     }
 
-    public function SendMail($commande) {
+    /**
+     * @param Commande $commande
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function SendMail(Commande $commande) {
+
+        $billets = $commande->getBillets();
 
         $mail = (new \Swift_Message("Musée du Louvre – Commande confirmée"))
             ->setFrom("jy.trsh@gmail.com")
@@ -19,10 +33,8 @@ class Mailing
             ->setBody(
                 $this->template->render(
                     'commande/email.html.twig',
-                    array(  "name" => $commande->getEmail(),
-                            "numCom" => $commande->getNumCommande(),
-                            "prixTotal" => $commande->getPrixTotal(),
-                            "nbBillets" => $commande->getNbBillets()
+                    array(  "commande" => $commande,
+                            "billets" => $billets
                     )
                 ),
                 'text/html'
