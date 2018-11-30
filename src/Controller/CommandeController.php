@@ -20,8 +20,6 @@ class CommandeController extends AbstractController
      */
     public function home()
     {
-
-        throw new CommandeNotFoundException( );
         return $this->render("commande/index.html.twig");
     }
 
@@ -55,14 +53,11 @@ class CommandeController extends AbstractController
      * @param Request $request
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws CommandeNotFoundException
      */
     public function select(Request $request, CommandeManager $commandeManager)
     {
         $commande = $commandeManager->getCurrentCommande();
-
-        if ($commande == false) {
-            return $this->redirectToRoute("error");
-        }
 
         $orderForm = $this->createForm(CommandeBilletsType::class, $commande);
         $orderForm->handleRequest($request);
@@ -87,15 +82,6 @@ class CommandeController extends AbstractController
     {
         $commande = $commandeManager->getCurrentCommande();
 
-        if ($commande == false) {
-            return $this->redirectToRoute("error");
-        }
-
-        $this->addFlash(
-            "test",
-            "Ceci est un test"
-        );
-
         $billets = $commande->getBillets();
 
         return $this->render("commande/confirm.html.twig", array(
@@ -103,6 +89,25 @@ class CommandeController extends AbstractController
             "billets" => $billets
         ));
     }
+
+    /**
+     * @Route("/testmail", name="testmail")
+     * @param CommandeManager $commandeManager
+     * @param Mailing $mailing
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws CommandeNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function testMail(CommandeManager $commandeManager, Mailing $mailing)
+    {
+        $commande = $commandeManager->getCurrentCommande();
+
+        $mailing->SendMail($commande);
+
+        return $this->redirectToRoute("confirm");
+    } //TODO Supprimer cette fonction
 
     /**
      * @Route("/succes", name="success")
@@ -113,6 +118,7 @@ class CommandeController extends AbstractController
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @throws CommandeNotFoundException
      */
     public function success(CommandeManager $commandeManager, ObjectManager $manager, Mailing $mailing)
     {
@@ -131,9 +137,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("checkout", name="checkout", methods={"POST"})
+     * @Route("/checkout", name="checkout", methods={"POST"})
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws CommandeNotFoundException
      */
     public function checkout(CommandeManager $commandeManager)
     {
@@ -155,7 +162,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("erreur", name="error")
+     * @Route("/erreur", name="error")
      */
     public function error()
     {
@@ -163,7 +170,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("cancel", name="cancel")
+     * @Route("/cancel", name="cancel")
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -172,5 +179,23 @@ class CommandeController extends AbstractController
         $commandeManager->clearSession();
 
         return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/mentions-legales", name="mentions")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function mentions()
+    {
+        return $this->render("commande/mentions.html.twig");
+    }
+
+    /**
+     * @Route("/contact", name="contact")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function contact()
+    {
+        return $this->render("commande/contact.html.twig");
     }
 }

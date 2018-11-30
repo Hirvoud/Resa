@@ -41,3 +41,14 @@ body {
     background-color: lightsteelblue;
     padding-top: 15px;
 }
+
+.footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.mentions-title {
+    text-align: center;
+}

@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use App\Entity\Commande;
+use Swift_Image;
 
 /**
  * @property \Twig_Environment template
@@ -26,13 +27,14 @@ class Mailing
     public function SendMail(Commande $commande) {
 
         $billets = $commande->getBillets();
+        $image = "";
 
         $mail = (new \Swift_Message("Musée du Louvre – Commande confirmée"))
             ->setFrom("jy.trsh@gmail.com")
             ->setTo($commande->getEmail())
             ->setBody(
                 $this->template->render(
-                    'commande/email.html.twig',
+                    "email/orderConfirm.html.twig",
                     array(  "commande" => $commande,
                             "billets" => $billets
                     )

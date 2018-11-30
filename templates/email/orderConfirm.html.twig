@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Musée du Louvre – Billetterie{% endblock %}</title>
+
+    {% block stylesheets %}
+        <style>
+            body {
+                font-size: 1.5em;
+                font-family: sans-serif;
+            }
+            table {
+                width: 80%; border: 1px solid black; border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid black; border-collapse: collapse;
+            }
+            .logo {
+                text-align: center;
+            }
+            .contact {
+                font-size: 1em;
+            }
+        </style>
+    {% endblock %}
+</head>
+
+<body>
+
+    {% block body %}
+
+        <div class="logo"><img src="{{ asset('img/logo-louvre.png') }}" alt="Logo Louvre"></div>
+        <h2>Merci de votre commande !</h2>
+
+        <div>
+            <p>Bonjour,<br />
+                votre commande n° {{ commande.numCommande }} d'un montant de <strong>{{ commande.prixTotal }} euros</strong> a été validée.</p>
+            <p>Veuillez trouver ci-dessous le détail de vos billets</p>
+        </div>
+
+        <div class="ticket-summary">
+            <table>
+                {% for billet in billets %}
+                    <tr>
+                        <th><strong>Billet {{ loop.index }}</strong></th>
+                        <td><strong>Prénom</strong> : {{ billet.prenom }}</td>
+                        <td><strong>Nom</strong> : {{ billet.nom }}</td>
+                        <td><strong>Age</strong> : {{ billet.visitAge }} ans</td>
+                        <td><strong>Tarif</strong> : {{ billet.tarif }} €</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div>
+            <p>Si un ou plusieurs de vos billets bénéficient du tarif réduit, n'oubliez pas d'apporter les justificatifs nécessaires le jour de votre visite.</p>
+        </div>
+
+        <div class="contact">
+            Pour toute question, merci de ne pas répondre à ce mail mais de nous contacter à
+            <a href="mailto:x@x.bzh">cette adresse</a> en rappelant la référence de votre commande.
+        </div>
+
+
+    {% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+</body>
+</html>

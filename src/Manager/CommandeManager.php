@@ -76,27 +76,13 @@ class CommandeManager
      */
     public function getCurrentCommande()
     {
-        $cmd = $this->session->get(self::ID_SESSION_COMMANDE);
+        $commande = $this->session->get(self::ID_SESSION_COMMANDE);
 
-        if(!$cmd instanceof  Commande){
+        if(!$commande instanceof Commande){
             throw new CommandeNotFoundException();
         }
-        $commande = $this->testSession($cmd);
 
         return $commande;
-    }
-
-    /**
-     * @param Commande $commande
-     * @return Commande|bool
-     */
-    public function testSession(Commande $commande)
-    {
-        if($commande->getEmail() == null || $commande->getNbBillets() == null || $commande->getNbBillets() == null || $commande->getDateVisite() == null || $commande->getTypeVisite() == null ) {
-            return false;
-        } else {
-            return $commande;
-        }
     }
 
     /**
