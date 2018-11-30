@@ -11,8 +11,10 @@ class CommandeTest extends TestCase
     public function testNbBillets() {
         $commande = new Commande();
 
+        $commande->setNbBillets(32);
+
         $result = $commande->getNbBillets();
 
-        $this->assertSame(null, $result);
+        $this->assertSame(32, $result);
     }
 }

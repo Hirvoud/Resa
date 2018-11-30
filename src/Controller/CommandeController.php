@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Exception\CommandeNotFoundException;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
 use App\Manager\CommandeManager;
@@ -19,6 +20,8 @@ class CommandeController extends AbstractController
      */
     public function home()
     {
+
+        throw new CommandeNotFoundException( );
         return $this->render("commande/index.html.twig");
     }
 
@@ -78,6 +81,7 @@ class CommandeController extends AbstractController
      * @Route("/confirmation", name="confirm")
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \App\Exception\CommandeNotFoundException
      */
     public function confirm(CommandeManager $commandeManager)
     {

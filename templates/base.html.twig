@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Musée du Louvre – Billetterie{% endblock %}</title>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">-->
+        <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
         <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset("css/bootstrap-datepicker.css") }}">
         <link rel="stylesheet" href="{{ asset("css/style.css") }}">
         {% block stylesheets %}{% endblock %}
     </head>
@@ -14,9 +16,16 @@
         {% block body %}{% endblock %}
     </div>
 
-        {% block javascripts %}<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-            <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <script src="{{ asset("js/datePicker.js") }}"></script>
-            <script src="https://js.stripe.com/v3/"></script>{% endblock %}
+        {% block javascripts %}
+            <script
+                    src="https://code.jquery.com/jquery-3.3.1.js"
+                    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                    crossorigin="anonymous"></script>
+            {#<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
+            {#<script scr="{{ asset('js/jquery.min.js') }}"></script>#}
+            <script scr="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset("js/bootstrap-datepicker.js") }}"></script>
+            <script src="https://js.stripe.com/v3/"></script>
+        {% endblock %}
     </body>
 </html>

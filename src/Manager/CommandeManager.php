@@ -5,6 +5,7 @@ namespace App\Manager;
 
 use App\Entity\Billet;
 use App\Entity\Commande;
+use App\Exception\CommandeNotFoundException;
 use App\Service\Payment;
 use App\Service\PriceCalculator;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -37,6 +38,7 @@ class CommandeManager
         $this->session = $session;
         $this->priceCalculator = $priceCalculator;
         $this->payment = $payment;
+
     }
 
 
@@ -70,10 +72,15 @@ class CommandeManager
 
     /**
      * @return Commande
+     * @throws CommandeNotFoundException
      */
     public function getCurrentCommande()
     {
         $cmd = $this->session->get(self::ID_SESSION_COMMANDE);
+
+        if(!$cmd instanceof  Commande){
+            throw new CommandeNotFoundException();
+        }
         $commande = $this->testSession($cmd);
 
         return $commande;
@@ -98,7 +105,7 @@ class CommandeManager
      */
     public function payment(Commande $commande)
     {
-        $checkout = $this->payment->Pay($commande);
+        $checkout = $this->payment->pay($commande);
         return $checkout;
     }
 

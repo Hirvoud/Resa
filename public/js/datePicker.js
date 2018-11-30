@@ -57,8 +57,8 @@ function DisableDays(date) {
 
 console.log(JoursFeries('2019'));
 
-$("#datepicker").datepicker({
-    minDate: 0,
-    beforeShowDay: DisableDays,
-    dateFormat: "yy-mm-dd"
+
+$('.datepicker').datepicker({
+    daysOfWeekDisabled: [0,2],
+    format: "yyyy-mm-dd"
 });

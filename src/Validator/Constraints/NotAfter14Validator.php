@@ -20,6 +20,7 @@ class NotAfter14Validator extends ConstraintValidator
         $visitDate = $value->getDateVisite()->format("d/M/y");
         $hour = $dt->format("H");
 
+        //TODO add type visite journée
 
         if($today == $visitDate && $hour >= 12) {
             $this->context

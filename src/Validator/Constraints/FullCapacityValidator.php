@@ -38,6 +38,8 @@ class FullCapacityValidator extends ConstraintValidator
             return ;
         }
 
+        dump($object->getDateVisite());
+
         $todaysTickets = $this->commandeRepository->countBilletsForDate($object->getDateVisite());
 
         $visitsTickets = $object->getNbBillets();
@@ -53,6 +55,7 @@ class FullCapacityValidator extends ConstraintValidator
         if ($todaysTickets + $visitsTickets > self::TICKETS_LIMIT) {
             $this->context
                 ->buildViolation($constraint->message)
+                ->atPath('dateVisite')
                 ->addViolation()
             ;
         }

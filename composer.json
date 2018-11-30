@@ -6,6 +6,7 @@
     "ext-calendar": "*",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "robloach/component-installer": "^0.2.3",
     "sensio/framework-extra-bundle": "^5.1",
     "stripe/stripe-php": "3.*",
     "symfony/asset": "*",

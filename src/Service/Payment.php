@@ -25,7 +25,7 @@ class Payment
      * @param Commande $commande
      * @return bool
      */
-    public function Pay(Commande $commande) {
+    public function pay(Commande $commande) {
 
         \Stripe\Stripe::setApiKey($this->private_key);
 
@@ -34,7 +34,7 @@ class Payment
 
         // Create a charge: this will charge the user's card
         try {
-            $charge = \Stripe\Charge::create(array(
+            \Stripe\Charge::create(array(
                 "amount" => $commande->getPrixTotal() * 100, // Amount in cents
                 "currency" => "eur",
                 "source" => $token,

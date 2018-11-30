@@ -15,11 +15,12 @@
     <div class="row">
         <div class="col-lg-12">
             {{ form_start(orderForm) }}
+            {{ form_errors(orderForm) }}
                 <label for="">Email</label>
                     {{ form_widget(orderForm.email) }}<br />
                 <label for="">Date</label>
                     {{ form_errors(orderForm.dateVisite) }}
-                    {{ form_widget(orderForm.dateVisite, {"id":"datepicker"}) }}<br />
+                    {{ form_widget(orderForm.dateVisite, {attr: {class:"datepicker"}}) }}<br />
                 <label for="">Nombre de billets</label>
                     {{ form_widget(orderForm.nbBillets) }}<br />
                 <label for="">Type de visite</label>
@@ -35,4 +36,11 @@
 
 
 
+{% endblock %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/datePicker.js') }}"></script>
 {% endblock %}
