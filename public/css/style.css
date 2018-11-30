@@ -52,3 +52,8 @@ body {
 .mentions-title {
     text-align: center;
 }
+
+.main-title a {
+    text-decoration: none !important;
+    color: white;
+}

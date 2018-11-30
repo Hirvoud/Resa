@@ -196,6 +196,7 @@ class CommandeController extends AbstractController
      */
     public function contact()
     {
+        //TODO if post -> mailer
         return $this->render("commande/contact.html.twig");
     }
 }

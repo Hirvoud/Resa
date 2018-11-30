@@ -22,7 +22,7 @@ class NotAfter14Validator extends ConstraintValidator
 
         //TODO add type visite journée
 
-        if($today == $visitDate && $hour >= 12) {
+        if($today == $visitDate && $hour >= 12 && $value->getTypeVisite() == "j") {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()

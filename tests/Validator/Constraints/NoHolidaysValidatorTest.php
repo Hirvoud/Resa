@@ -2,6 +2,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Service\Holidays;
 use App\Validator\Constraints\NoHolidays;
 use App\Validator\Constraints\NoHolidaysValidator;
 
@@ -16,7 +17,10 @@ class NoHolidaysValidatorTest extends ValidatorTestAbstract
      */
     protected function getValidatorInstance()
     {
-        return new NoHolidaysValidator();
+        $holidays = new Holidays();
+        dump($holidays);
+        //TODO décoder cette merde
+        return new NoHolidaysValidator($holidays);
     }
 
     /**
@@ -27,7 +31,8 @@ class NoHolidaysValidatorTest extends ValidatorTestAbstract
         $noHolidaysConstraint = new NoHolidays();
         $noHolidaysValidator = $this->initValidator();
 
-        $noHolidaysValidator->validate("Good", $noHolidaysConstraint);
+        $noHolidaysValidator->validate("2018-12-25", $noHolidaysConstraint);
+
     }
 
     /**
@@ -38,6 +43,6 @@ class NoHolidaysValidatorTest extends ValidatorTestAbstract
         $noHolidaysConstraint = new NoHolidays();
 
         $noHolidaysValidator = $this->initValidator($noHolidaysConstraint->message);
-        $noHolidaysValidator->validate("Bad", $noHolidaysConstraint);
+        $noHolidaysValidator->validate("2019-01-06", $noHolidaysConstraint);
     }
 }

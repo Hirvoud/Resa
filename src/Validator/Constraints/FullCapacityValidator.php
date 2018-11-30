@@ -10,7 +10,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class FullCapacityValidator extends ConstraintValidator
 {
-    const TICKETS_LIMIT = 12;
+    const TICKETS_LIMIT = 120;
     const TICKETS_ALERT = 6;
 
     /**

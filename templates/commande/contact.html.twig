@@ -5,8 +5,22 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="main-title">
-                <h1>Billetterie du Musée du Louvre</h1>
+                <a href="{{ path("home") }}"><h1>Billetterie du Musée du Louvre</h1></a>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <form action="{{ path("contact") }}" class="contact-form" method="post">
+                Prénom : <br />
+                <input type="text" name="prenom" required><br />
+                Adresse email : <br />
+                <input type="email" name="email" required><br />
+                Message : <br />
+                <textarea name="content" required></textarea><br />
+                <input type="submit" value="Envoyer">
+            </form>
         </div>
     </div>
 
