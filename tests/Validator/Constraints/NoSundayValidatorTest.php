@@ -25,13 +25,17 @@ class NoSundayValidatorTest extends ValidatorTestAbstract
      */
     public function testValidationOk()
     {
-        $date = new \DateTime();
-        $date->setDate(2018, 12, 01);
+        $noSunday1 = new \DateTime();
+        $noSunday1->setDate(2018, 12, 1);
+
+        $noSunday2 = new \DateTime();
+        $noSunday2->setDate(2018, 12, 3);
 
         $noSundayConstraint = new NoSunday();
         $noSundayValidator = $this->initValidator();
 
-        $noSundayValidator->validate($date, $noSundayConstraint);
+        $noSundayValidator->validate($noSunday1, $noSundayConstraint);
+        $noSundayValidator->validate($noSunday2, $noSundayConstraint);
 
     }
 
@@ -41,12 +45,18 @@ class NoSundayValidatorTest extends ValidatorTestAbstract
      */
     public function testValidationKo()
     {
-        $date = new \DateTime();
-        $date->setDate(2018, 12, 02);
+        $noSunday1 = new \DateTime();
+        $noSunday1->setDate(2018, 12, 2);
+
+        $noSunday2 = new \DateTime();
+        $noSunday2->setDate(2018, 12, 9);
 
         $noSundayConstraint = new NoSunday();
 
         $noSundayValidator = $this->initValidator($noSundayConstraint->message);
-        $noSundayValidator->validate($date, $noSundayConstraint);
+        $noSundayValidator->validate($noSunday1, $noSundayConstraint);
+
+        $noSundayValidator = $this->initValidator($noSundayConstraint->message);
+        $noSundayValidator->validate($noSunday2, $noSundayConstraint);
     }
 }
