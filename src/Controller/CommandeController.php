@@ -200,11 +200,24 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/contact", name="contact")
+     * @param Request $request
+     * @param Mailing $mailing
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function contact()
+    public function contact(Request $request, Mailing $mailing)
     {
-        //TODO if post -> mailer
+        if($request->isMethod('POST')) {
+            $mailing->SendContactMail($request);
+
+            $this->addFlash(
+                "contact-mail",
+                "Votre message a bien été envoyé, vous pouvez retourner à l'accueil du site"
+            );
+        }
+
         return $this->render("commande/contact.html.twig");
     }
 }

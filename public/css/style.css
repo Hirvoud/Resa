@@ -2,6 +2,14 @@ body {
     background-color: lightgrey;
 }
 
+a {
+    text-decoration: none !important;
+}
+
+.intro {
+    text-align: justify;
+}
+
 .pres-tarif {
     width: 100%;
     margin-bottom: 5px;
@@ -41,6 +49,11 @@ body {
     font-size: 1.5em;
 }
 
+.flash-contact {
+    color: green;
+    font-size: 1.1em;
+}
+
 .select-ticket {
     border: 1px solid black;
     background-color: lightsteelblue;
@@ -54,11 +67,29 @@ body {
     margin-top: 50px;
 }
 
+.footer a {
+    color: white;
+}
+
 .mentions-title {
     text-align: center;
 }
 
 .main-title a {
-    text-decoration: none !important;
     color: white;
+}
+
+.contact-form textarea {
+    min-height: 250px;
+    max-height: 300px;
+    min-width: 500px;
+    max-width: 100%;
+
+    resize: both;
+}
+
+.form-text {
+    min-width: 500px;
+
+
 }

@@ -21,14 +21,17 @@
 
     <div>
         <p>Bonjour,<br />
-            nous vous remercions d'avoir pris contact avec notre service client, nous vous recontacterons dans les plus brefs délais.</p>
-        <p>Veuillez trouver ci-dessous le détail de vos billets</p>
+            vous avez reçu un message de la part de {{ nom }}.</p>
+
+        <p>Le contenu du message est le suivant : </p>
+        <div class="contenu-message">
+            <p>{{ contenu }}</p>
+        </div>
+
+        <p>Pour répondre à cette personne, cliquez sur <a href="mailto:{{ email }}">ce lien.</a></p>
     </div>
 
-    <div class="contact">
-        Pour toute question, merci de ne pas répondre à ce mail mais de nous contacter à
-        <a href="mailto:x@x.bzh">cette adresse</a> en rappelant la référence de votre commande.
-    </div>
+
 
 
 {% endblock %}

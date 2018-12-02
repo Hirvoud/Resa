@@ -11,15 +11,28 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
+            <h2>Contactez-nous !</h2>
+            <p>Une question ? Une remarque ? N'hésitez pas à nous contacter en remplissant le formulaire ci-dessous, nous vous répondrons dans les plus brefs délais.</p>
+        </div>
+    </div>
+
+    {% for message in app.flashes("contact-mail") %}
+        <div class="flash-contact">
+            {{ message }}<br />
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-lg-12">
             <form action="{{ path("contact") }}" class="contact-form" method="post">
-                Prénom : <br />
-                <input type="text" name="prenom" required><br />
+                Nom : <br />
+                <input type="text" name="nom" class="form-text" required><br />
                 Adresse email : <br />
-                <input type="email" name="email" required><br />
+                <input type="email" name="email" class="form-text" required><br />
                 Message : <br />
-                <textarea name="content" required></textarea><br />
-                <input type="submit" value="Envoyer">
+                <textarea name="content" required></textarea><br /><br />
+                <input type="submit" class="btn btn-primary" value="Envoyer">
             </form>
         </div>
     </div>

@@ -4,7 +4,7 @@ namespace App\Service;
 
 
 use App\Entity\Commande;
-use Swift_Image;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @property \Twig_Environment template
@@ -27,7 +27,6 @@ class Mailing
     public function SendMail(Commande $commande) {
 
         $billets = $commande->getBillets();
-        $image = "";
 
         $mail = (new \Swift_Message("Musée du Louvre – Commande confirmée"))
             ->setFrom("jy.trsh@gmail.com")
@@ -40,6 +39,32 @@ class Mailing
                     )
                 ),
                 'text/html'
+            )
+        ;
+
+        $this->mailer->send($mail);
+    }
+
+    /**
+     * @param Request $request
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function SendContactMail(Request $request)
+    {
+        $mail = (new \Swift_Message("Message en provenance d'un visiteur"))
+            ->setFrom("jy.trsh@gmail.com")
+            ->setTo("jy.trsh@gmail.com")
+            ->setBody(
+                $this->template->render(
+                    "email/contact.html.twig",
+                    array(  "nom" => $request->get("nom"),
+                            "email" => $request->get("email"),
+                            "contenu" => $request->get("content")
+                    )
+                ),
+                "text/html"
             )
         ;
 
