@@ -7,6 +7,8 @@ parameters:
     locale: 'fr'
     stripe_public_key: '%env(resolve:STRIPE_PK_KEY)%'
     stripe_private_key: '%env(resolve:STRIPE_SK_KEY)%'
+    mailer_user: '%env(resolve:MAILER_USER)%'
+    mailer_pass: '%env(resolve:MAILER_PASS)%'
 
 services:
     # default configuration for services in *this* file

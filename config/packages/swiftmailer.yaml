@@ -1,6 +1,6 @@
 swiftmailer:
     # url: '%env(MAILER_URL)%'
     transport: gmail
-    username: jy.trsh
-    password: jz$$PBXk$R2&GYTw85BQN@!X
+    username: '%mailer_user%'
+    password: '%mailer_pass%'
     spool: { type: 'memory' }
