@@ -85,11 +85,11 @@ function mergeHolidays()
     return feries1.concat(feries2);
 }
 
-
-console.log($feries);
-
 $('.datepicker').datepicker({
+    language: "fr",
     daysOfWeekDisabled: [0,2],
     datesDisabled: mergeHolidays(),
+    maxViewMode: "year",
+    weekStart: 1,
     format: "yyyy-mm-dd"
 });
