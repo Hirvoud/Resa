@@ -36,6 +36,11 @@ body {
     font-size: 1.7em;
 }
 
+.flash-warning {
+    color: orangered;
+    font-size: 1.5em;
+}
+
 .select-ticket {
     border: 1px solid black;
     background-color: lightsteelblue;

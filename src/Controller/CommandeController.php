@@ -6,6 +6,7 @@ use App\Exception\CommandeNotFoundException;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
 use App\Manager\CommandeManager;
+use App\Repository\CommandeRepository;
 use App\Service\Mailing;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,6 +59,13 @@ class CommandeController extends AbstractController
     public function select(Request $request, CommandeManager $commandeManager)
     {
         $commande = $commandeManager->getCurrentCommande();
+
+        if($commandeManager->checkWarningTickets($commande)) {
+            $this->addFlash(
+                "warning",
+                "Attention, il reste moins de 25 billets disponibles pour ce jour."
+            );
+        }
 
         $orderForm = $this->createForm(CommandeBilletsType::class, $commande);
         $orderForm->handleRequest($request);

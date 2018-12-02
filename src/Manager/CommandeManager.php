@@ -6,17 +6,20 @@ namespace App\Manager;
 use App\Entity\Billet;
 use App\Entity\Commande;
 use App\Exception\CommandeNotFoundException;
+use App\Repository\CommandeRepository;
 use App\Service\Payment;
 use App\Service\PriceCalculator;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class CommandeManager
+ * @property CommandeRepository commandeRepository
  * @package App\Manager
  */
 class CommandeManager
 {
     const ID_SESSION_COMMANDE = 'commande';
+    const TICKETS_ALERT = 975;
 
     /**
      * @var SessionInterface
@@ -33,11 +36,12 @@ class CommandeManager
      */
     private $payment;
 
-    public function __construct(SessionInterface $session, PriceCalculator $priceCalculator, Payment $payment)
+    public function __construct(SessionInterface $session, PriceCalculator $priceCalculator, Payment $payment, CommandeRepository $commandeRepository)
     {
         $this->session = $session;
         $this->priceCalculator = $priceCalculator;
         $this->payment = $payment;
+        $this->commandeRepository = $commandeRepository;
 
     }
 
@@ -108,4 +112,14 @@ class CommandeManager
         $this->session->clear();
     }
 
+    public function checkWarningTickets(Commande $commande)
+    {
+        $todaysTickets = $this->commandeRepository->countBilletsForDate($commande->getDateVisite());
+
+        if ($todaysTickets > self::TICKETS_ALERT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

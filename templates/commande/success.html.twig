@@ -10,7 +10,11 @@
         </div>
     </div>
 
-    <h2>Merci de votre commande !</h2>
-    <p>Un email vient d'être envoyée à l'adresse suivante : {{ email }}.</p>
+    <h2>Merci de votre commande !</h2><br />
+    <p>Un email de confirmation vient d'être envoyée à l'adresse suivante : {{ email }}.</p>
+
+    <div>
+        <a href="{{ path("home") }}"><button class="btn btn-info">Retour à l'accueil</button></a>
+    </div>
 
 {% endblock %}

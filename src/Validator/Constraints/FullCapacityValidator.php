@@ -10,8 +10,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class FullCapacityValidator extends ConstraintValidator
 {
-    const TICKETS_LIMIT = 120;
-    const TICKETS_ALERT = 6;
+    const TICKETS_LIMIT = 1000;
 
     /**
      * @var CommandeRepository
@@ -44,13 +43,6 @@ class FullCapacityValidator extends ConstraintValidator
 
         $visitsTickets = $object->getNbBillets();
 
-        //TODO Déplacer alerte flash ailleurs
-//        if ($todaysTickets > self::TICKETS_ALERT) {
-//            $this->addFlash(
-//                "warning",
-//                "Attention, il ne reste que xx billets disponibles pour ce jour."
-//            );
-//        }
 
         if ($todaysTickets + $visitsTickets > self::TICKETS_LIMIT) {
             $this->context

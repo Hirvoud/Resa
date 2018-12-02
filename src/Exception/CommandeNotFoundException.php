@@ -6,6 +6,6 @@ namespace App\Exception;
 class CommandeNotFoundException extends \Exception
 {
 
-    public $message = "Commande not found";
+    public $message = "Aucune commande n'a été trouvée";
 
 }
