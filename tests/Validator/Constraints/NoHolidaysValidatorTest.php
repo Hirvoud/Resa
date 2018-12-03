@@ -18,7 +18,6 @@ class NoHolidaysValidatorTest extends ValidatorTestAbstract
     protected function getValidatorInstance()
     {
         $holidays = new Holidays();
-        dump($holidays);
         //TODO résoudre problème de date
         return new NoHolidaysValidator($holidays);
     }
@@ -26,23 +25,23 @@ class NoHolidaysValidatorTest extends ValidatorTestAbstract
     /**
      * Test de dates valides
      */
-    public function testValidationOk()
+    public function testValidationHolidaysOk()
     {
         $noHolidaysConstraint = new NoHolidays();
         $noHolidaysValidator = $this->initValidator();
 
-        $noHolidaysValidator->validate("2018-12-25", $noHolidaysConstraint);
+        $noHolidaysValidator->validate(new \DateTime("2018-12-24"), $noHolidaysConstraint);
 
     }
 
     /**
      * Test de dates non valides
      */
-    public function testValidationKo()
+    public function testValidationHolidaysKo()
     {
         $noHolidaysConstraint = new NoHolidays();
 
         $noHolidaysValidator = $this->initValidator($noHolidaysConstraint->message);
-        $noHolidaysValidator->validate("2019-01-06", $noHolidaysConstraint);
+        $noHolidaysValidator->validate(new \DateTime("2019-12-25"), $noHolidaysConstraint);
     }
 }

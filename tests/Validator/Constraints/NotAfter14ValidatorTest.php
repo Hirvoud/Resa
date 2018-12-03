@@ -22,7 +22,7 @@ class NotAfter14ValidatorTest extends ValidatorTestAbstract
     /**
      * Test de dates valides
      */
-    public function testValidationOk()
+    public function testValidation14Ok()
     {
         $notAfter14Constraint = new NotAfter14();
         $notAfter14Validator = $this->initValidator();
@@ -34,7 +34,7 @@ class NotAfter14ValidatorTest extends ValidatorTestAbstract
     /**
      * Test de dates non valides
      */
-    public function testValidationKo()
+    public function testValidation14Ko()
     {
         $notAfter14Constraint = new NotAfter14();
 

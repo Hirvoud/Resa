@@ -25,7 +25,7 @@ class CommandeControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         $this->assertSame(1, $crawler->filter("html:contains('Sélection des billets')")->count());
-        $this->assertSame(1, $crawler->filter("html:contains('Prénom')")->count());
+        $this->assertSame(2, $crawler->filter("label:contains('Prénom')")->count());
         $this->assertSame(1, $crawler->filter("html:contains('Nom')")->count());
         $this->assertSame(1, $crawler->filter("html:contains('Date de naissance')")->count());
 

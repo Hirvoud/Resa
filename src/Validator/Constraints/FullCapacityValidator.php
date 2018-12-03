@@ -37,9 +37,8 @@ class FullCapacityValidator extends ConstraintValidator
             return ;
         }
 
-        dump($object->getDateVisite());
-
         $todaysTickets = $this->commandeRepository->countBilletsForDate($object->getDateVisite());
+
 
         $visitsTickets = $object->getNbBillets();
 

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Entity\Commande;
 use App\Repository\CommandeRepository;
 use App\Validator\Constraints\FullCapacityValidator;
 use App\Validator\Constraints\FullCapacity;
@@ -17,30 +18,40 @@ class FullCapacityValidatorTest extends ValidatorTestAbstract
      */
     protected function getValidatorInstance()
     {
-        $cmd = $this->createMock(CommandeRepository::class);
-        return new FullCapacityValidator($cmd);
+        $this->cmd = $this->createMock(CommandeRepository::class);
+        return new FullCapacityValidator($this->cmd);
     }
 
     /**
      * Test de dates valides
      */
-    public function testValidationOk()
+    public function testValidationFullOk()
     {
         $fullCapacityConstraint = new FullCapacity();
         $fullCapacityValidator = $this->initValidator();
 
-        $fullCapacityValidator->validate("6", $fullCapacityConstraint);
+        $commande = new Commande();
+        $commande->setDateVisite(new \DateTime('2018-12-1'));
+        $commande->setNbBillets(10);
+
+
+        $this->cmd->method('countBilletsForDate')
+            ->willReturn(990);
+
+
+
+        $fullCapacityValidator->validate($commande, $fullCapacityConstraint);
 
     }
 
     /**
      * Test de dates non valides
      */
-    public function testValidationKo()
+    public function testValidationFullKo()
     {
         $fullCapacityConstraint = new FullCapacity();
 
         $fullCapacityValidator = $this->initValidator($fullCapacityConstraint->message);
-        $fullCapacityValidator->validate("32", $fullCapacityConstraint);
+        $fullCapacityValidator->validate("1500", $fullCapacityConstraint);
     }
 }

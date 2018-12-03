@@ -7,19 +7,27 @@ use App\Entity\Commande;
 use App\Exception\CommandeNotFoundException;
 use App\Manager\CommandeManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class CommandeManagerTest extends TestCase
 {
+    /**
+     * @var Session
+     */
     private $session;
     private $priceCalculator;
     private $payment;
     private $commandeRepository;
 
+    /**
+     * @var CommandeManager
+     */
+    private $commandeManager;
+
     public function setUp()
     {
-        $this->session = $this->getMockBuilder("Symfony\Component\HttpFoundation\Session\SessionInterface")
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->session = new Session(new MockArraySessionStorage());
 
         $this->priceCalculator = $this->getMockBuilder("App\Service\PriceCalculator")
             ->disableOriginalConstructor()
@@ -29,31 +37,33 @@ class CommandeManagerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->commandeRepository = $this ->getMockBuilder("App\Repository\CommandeRepository")
+        $this->commandeRepository = $this->getMockBuilder("App\Repository\CommandeRepository")
             ->disableOriginalConstructor()
             ->getMock();
+
+
+        $this->commandeManager = new CommandeManager($this->session, $this->priceCalculator, $this->payment, $this->commandeRepository);
     }
 
+    /**
+     * @throws CommandeNotFoundException
+     */
     public function testGetCurrentCommandeReturnCommande()
     {
-        $commandeManager = new CommandeManager($this->session, $this->priceCalculator, $this->payment, $this->commandeRepository);
+        $this->session->set(CommandeManager::ID_SESSION_COMMANDE, new Commande());
+        $commande = $this->commandeManager->getCurrentCommande();
 
-        $expectedCommande = new Commande();
-
-        $commande = $commandeManager->getCurrentCommande();
-
-        $this->assertEquals($expectedCommande, $commande);
-        $this->assertEquals("App\Entity\Commande", get_class($commande));
+        $this->assertInstanceOf(Commande::class, $commande);
     }
 
+    /**
+     * @throws CommandeNotFoundException
+     */
     public function testGetCurrentCommandeThrowException()
     {
         $this->expectException(CommandeNotFoundException::class);
 
-        $commandeManager = new CommandeManager($this->session, $this->priceCalculator, $this->payment, $this->commandeRepository);
-
-        $commandeManager->getCurrentCommande();
-
+        $this->commandeManager->getCurrentCommande();
 
     }
 }

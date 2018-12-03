@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use App\Entity\Commande;
+use Swift_Image;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,16 +29,20 @@ class Mailing
 
         $billets = $commande->getBillets();
 
-        $mail = (new \Swift_Message("Musée du Louvre – Commande confirmée"))
+        $mail = (new \Swift_Message("Musée du Louvre – Commande confirmée"));
+        $url = $mail->embed(Swift_Image::fromPath('img/logo-louvre.png'));
+        $mail
             ->setFrom("jy.trsh@gmail.com")
             ->setTo($commande->getEmail())
             ->setBody(
                 $this->template->render(
                     "email/orderConfirm.html.twig",
                     array(  "commande" => $commande,
-                            "billets" => $billets
+                            "billets" => $billets,
+                            "urlImage" => $url
                     )
                 ),
+
                 'text/html'
             )
         ;

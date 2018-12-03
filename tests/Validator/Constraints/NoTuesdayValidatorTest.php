@@ -23,7 +23,7 @@ class NoTuesdayValidatorTest extends ValidatorTestAbstract
      * Test de dates valides
      * @throws \Exception
      */
-    public function testValidationOk()
+    public function testValidationTuesdayOk()
     {
         $noTuesday1 = new \DateTime();
         $noTuesday1->setDate(2018, 12, 1);
@@ -43,7 +43,7 @@ class NoTuesdayValidatorTest extends ValidatorTestAbstract
      * Test de dates non valides
      * @throws \Exception
      */
-    public function testValidationKo()
+    public function testValidationTuesdayKo()
     {
         $noTuesday1 = new \DateTime();
         $noTuesday1->setDate(2018, 12, 4);

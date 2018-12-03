@@ -21,42 +21,56 @@ class NoSundayValidatorTest extends ValidatorTestAbstract
 
     /**
      * Test de dates valides
+     * @dataProvider notSunday
      * @throws \Exception
      */
-    public function testValidationOk()
+    public function testValidationSundayOk($year,$month,$day)
     {
-        $noSunday1 = new \DateTime();
-        $noSunday1->setDate(2018, 12, 1);
-
-        $noSunday2 = new \DateTime();
-        $noSunday2->setDate(2018, 12, 3);
+        $noSunday = new \DateTime();
+        $noSunday->setDate($year, $month, $day);
 
         $noSundayConstraint = new NoSunday();
         $noSundayValidator = $this->initValidator();
 
-        $noSundayValidator->validate($noSunday1, $noSundayConstraint);
-        $noSundayValidator->validate($noSunday2, $noSundayConstraint);
+        $noSundayValidator->validate($noSunday, $noSundayConstraint);
+
+    }
+
+
+    public function notSunday()
+    {
+        return [
+            [2018,12,1],
+            [2018,12,3],
+            [2018,12,4]
+        ];
 
     }
 
     /**
      * Test de dates non valides
+     * @dataProvider isSunday
      * @throws \Exception
      */
-    public function testValidationKo()
+    public function testValidationSundayKo($year,$month,$day)
     {
-        $noSunday1 = new \DateTime();
-        $noSunday1->setDate(2018, 12, 2);
 
-        $noSunday2 = new \DateTime();
-        $noSunday2->setDate(2018, 12, 9);
+        $sunday = new \DateTime();
+        $sunday->setDate($year, $month, $day);
+
 
         $noSundayConstraint = new NoSunday();
 
         $noSundayValidator = $this->initValidator($noSundayConstraint->message);
-        $noSundayValidator->validate($noSunday1, $noSundayConstraint);
+        $noSundayValidator->validate($sunday, $noSundayConstraint);
+    }
 
-        $noSundayValidator = $this->initValidator($noSundayConstraint->message);
-        $noSundayValidator->validate($noSunday2, $noSundayConstraint);
+    public function isSunday()
+    {
+        return [
+            [2018,12,2],
+            [2018,12,9]
+        ];
+
     }
 }
