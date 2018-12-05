@@ -21,42 +21,62 @@ class NoTuesdayValidatorTest extends ValidatorTestAbstract
 
     /**
      * Test de dates valides
+     * @dataProvider notTuesday
+     * @param $year
+     * @param $month
+     * @param $day
      * @throws \Exception
      */
-    public function testValidationTuesdayOk()
+    public function testValidationTuesdayOk($year,$month,$day)
     {
-        $noTuesday1 = new \DateTime();
-        $noTuesday1->setDate(2018, 12, 1);
+        $noTuesday = new \DateTime();
+        $noTuesday->setDate($year, $month, $day);
 
-        $noTuesday2 = new \DateTime();
-        $noTuesday2->setDate(2018, 12, 3);
-
-        $noTuesdayConstraint = new noTuesday();
+        $noTuesdayConstraint = new NoTuesday();
         $noTuesdayValidator = $this->initValidator();
 
-        $noTuesdayValidator->validate($noTuesday1, $noTuesdayConstraint);
-        $noTuesdayValidator->validate($noTuesday2, $noTuesdayConstraint);
+        $noTuesdayValidator->validate($noTuesday, $noTuesdayConstraint);
+
+    }
+
+
+    public function notTuesday()
+    {
+        return [
+            [2018,12,1],
+            [2018,12,3],
+            [2018,12,5]
+        ];
 
     }
 
     /**
      * Test de dates non valides
+     * @dataProvider isTuesday
+     * @param $year
+     * @param $month
+     * @param $day
      * @throws \Exception
      */
-    public function testValidationTuesdayKo()
+    public function testValidationTuesdayKo($year,$month,$day)
     {
-        $noTuesday1 = new \DateTime();
-        $noTuesday1->setDate(2018, 12, 4);
 
-        $noTuesday2 = new \DateTime();
-        $noTuesday2->setDate(2018, 12, 11);
+        $tuesday = new \DateTime();
+        $tuesday->setDate($year, $month, $day);
 
-        $noTuesdayConstraint = new noTuesday();
 
-        $noTuesdayValidator = $this->initValidator($noTuesdayConstraint->message);
-        $noTuesdayValidator->validate($noTuesday1, $noTuesdayConstraint);
+        $noTuesdayConstraint = new NoTuesday();
 
         $noTuesdayValidator = $this->initValidator($noTuesdayConstraint->message);
-        $noTuesdayValidator->validate($noTuesday2, $noTuesdayConstraint);
+        $noTuesdayValidator->validate($tuesday, $noTuesdayConstraint);
+    }
+
+    public function isTuesday()
+    {
+        return [
+            [2018,12,4],
+            [2018,12,11]
+        ];
+
     }
 }

@@ -18,7 +18,6 @@ class NoHolidaysValidatorTest extends ValidatorTestAbstract
     protected function getValidatorInstance()
     {
         $holidays = new Holidays();
-        //TODO résoudre problème de date
         return new NoHolidaysValidator($holidays);
     }
 

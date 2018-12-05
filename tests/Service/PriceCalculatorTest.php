@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class PriceCalculatorTest extends TestCase
 {
-    private $commande;
     /**
      * @var PriceCalculator
      */
@@ -28,6 +27,7 @@ class PriceCalculatorTest extends TestCase
      * @param string $date
      * @param string $birthDate
      * @param bool $reduce
+     * @param $expectedPrice
      * @throws \Exception
      */
     public function testPriceCheck(string $date, string $birthDate, bool $reduce, $expectedPrice)

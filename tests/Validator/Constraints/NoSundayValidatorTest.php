@@ -22,6 +22,9 @@ class NoSundayValidatorTest extends ValidatorTestAbstract
     /**
      * Test de dates valides
      * @dataProvider notSunday
+     * @param $year
+     * @param $month
+     * @param $day
      * @throws \Exception
      */
     public function testValidationSundayOk($year,$month,$day)
@@ -50,6 +53,9 @@ class NoSundayValidatorTest extends ValidatorTestAbstract
     /**
      * Test de dates non valides
      * @dataProvider isSunday
+     * @param $year
+     * @param $month
+     * @param $day
      * @throws \Exception
      */
     public function testValidationSundayKo($year,$month,$day)

@@ -6,7 +6,6 @@ use App\Exception\CommandeNotFoundException;
 use App\Form\CommandeBilletsType;
 use App\Form\CommandeType;
 use App\Manager\CommandeManager;
-use App\Repository\CommandeRepository;
 use App\Service\Mailing;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

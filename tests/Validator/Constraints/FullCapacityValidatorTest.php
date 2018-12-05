@@ -50,8 +50,17 @@ class FullCapacityValidatorTest extends ValidatorTestAbstract
     public function testValidationFullKo()
     {
         $fullCapacityConstraint = new FullCapacity();
-
         $fullCapacityValidator = $this->initValidator($fullCapacityConstraint->message);
-        $fullCapacityValidator->validate("1500", $fullCapacityConstraint);
+
+
+        $commande = new Commande();
+        $commande->setDateVisite(new \DateTime('2018-12-1'));
+        $commande->setNbBillets(6);
+
+        $this->cmd->method('countBilletsForDate')
+            ->willReturn(1050);
+
+
+        $fullCapacityValidator->validate($commande, $fullCapacityConstraint);
     }
 }

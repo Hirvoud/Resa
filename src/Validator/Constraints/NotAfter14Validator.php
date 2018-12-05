@@ -7,20 +7,19 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class NotAfter14Validator extends ConstraintValidator
 {
-    /**
+     /**
      * @param $value
      * @param Constraint $constraint
      * @throws \Exception
      */
     public function validate($value, Constraint $constraint)
     {
-
-        $dt = new \DateTime();
-        $today = $dt->format("d/M/y");
+        $date = new \DateTime();
+        $today = $date->format("d/M/y");
         $visitDate = $value->getDateVisite()->format("d/M/y");
-        $hour = $dt->format("H");
+        $hour = $date->format("H");
 
-        if($today == $visitDate && $hour >= 12 && $value->getTypeVisite() == "j") {
+        if($today == $visitDate && $hour >= 14 && $value->getTypeVisite() == "j") {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()

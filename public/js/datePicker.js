@@ -91,5 +91,6 @@ $('.datepicker').datepicker({
     datesDisabled: mergeHolidays(),
     maxViewMode: "year",
     weekStart: 1,
+    startDate: new Date(),
     format: "yyyy-mm-dd"
 });
