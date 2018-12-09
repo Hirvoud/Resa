@@ -1,5 +1,10 @@
 body {
-    background-color: lightgrey;
+    background-color: #331107;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: white;
 }
 
 a {
@@ -10,17 +15,26 @@ a {
     text-align: justify;
 }
 
-.pres-tarif {
+.pres-tarifs {
     width: 100%;
     margin-bottom: 5px;
 }
 
+.liste-tarifs {
+    border-left: solid #ddd thin;
+}
+
 .main-title {
+    font-family: Georgia, serif;
     text-align: center;
-    margin-bottom: 50px;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: black;
+    background-color: #222;
+    color: white;
+    margin: 0 -15px 50px -15px;
+}
+
+.main-title a {
     color: white;
 }
 
@@ -35,8 +49,12 @@ a {
 }
 
 .btn-primary {
-    background-color: black !important;
-    border-color: black;
+    background-color: #c82d00 !important;
+    border-color: #c82d00;
+}
+
+.btn-accent {
+    background-color: #23c0d7;
 }
 
 .flash-notice {
@@ -45,7 +63,7 @@ a {
 }
 
 .flash-warning {
-    color: orangered;
+    color: #c82d00;
     font-size: 1.5em;
 }
 
@@ -56,15 +74,15 @@ a {
 
 .select-ticket {
     border: 1px solid black;
-    background-color: lightsteelblue;
+    background-color: #23c0d7;
     padding-top: 15px;
 }
 
 .footer {
-    background-color: black;
+    background-color: #222222;
     color: white;
     text-align: center;
-    margin-top: 50px;
+    margin: 50px -15px 0 -15px;
 }
 
 .footer a {
@@ -73,10 +91,6 @@ a {
 
 .mentions-title {
     text-align: center;
-}
-
-.main-title a {
-    color: white;
 }
 
 .contact-form textarea {

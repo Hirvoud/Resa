@@ -10,15 +10,17 @@
         </div>
     </div>
 
+    <div><a href="{{ path("translate") }}"><button class="btn btn-accent">EN/FR</button></a></div>
+
     <div class="row intro">
         <div class="col-lg-6">
-            <h2>Bienvenue !</h2>
+            <h2>{% trans %}Bienvenue !{% endtrans %}</h2>
             <p>Ici vous pourrez réserver jusqu'à six billets pour votre visite.</p>
             <p>Les réservations sont possibles tous les jours sauf les mardi, dimanche et jours fériés.</p>
             <p>Chaque billet est nominatif et il est possible de réserver un maximum de six billets par commande.</p>
             <p>Les différents tarifs sont détaillés ci-contre.</p>
             <p>À l'entrée du musée, il vous sera demandé un justificatif pour les éventuels tarifs spéciaux.</p>
-
+            <hr />
             <h3>Horaires du musée :</h3>
             <p>
                 Lundi : 9 h - 20 h<br />
@@ -27,11 +29,11 @@
             </p>
             <p>L'évacuation des salles débute à 19 h 30 le lundi et à 17 h 30 les autres jours.</p>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 liste-tarifs">
             <h2>Liste des tarifs</h2>
-            <h3>Voici une liste des tarifs disponibles ainsi que les conditions associées :</h3>
+            <h4>Voici une liste des tarifs disponibles ainsi que les conditions associées :</h4>
 
-            <table class="pres-tarif">
+            <table class="pres-tarifs">
                 <tr>
                     <td>– Tarif normal : pour tous, à partir de 12 ans</td>
                     <td><strong>16 €</strong></td>

@@ -17,6 +17,7 @@ class CommandeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function home()
     {
@@ -24,13 +25,14 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/billetterie", name="order")
+     * @Route("/commande", name="order")
      * @param Request $request
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request, CommandeManager $commandeManager)
     {
+
         $commande = $commandeManager->initCommande();
 
         $form = $this->createForm(CommandeType::class, $commande);
@@ -218,5 +220,16 @@ class CommandeController extends AbstractController
         }
 
         return $this->render("commande/contact.html.twig");
+    }
+
+    /**
+     * @Route("/en-fr", name="translate")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function translate()
+    {
+        setlocale(LC_ALL, "en");
+
+        return $this->redirectToRoute("home");
     }
 }
