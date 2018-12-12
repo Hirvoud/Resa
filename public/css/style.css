@@ -31,16 +31,43 @@ a {
     padding-bottom: 30px;
     background-color: #222;
     color: white;
-    margin: 0 -15px 50px -15px;
+    margin: 0 -15px 0 -15px;
 }
 
 .main-title a {
     color: white;
 }
 
+.translate {
+    text-align: right;
+    margin: 10px 0 10px 0;
+}
+
 .enter-order {
     text-align: right;
     padding-right: 50px;
+}
+
+.order-summary {
+    width: 100%;
+    border: 1px solid black;
+}
+.order-summary tr {
+    height: 50px;
+    background-color: white;
+    border: none;
+}
+
+.ticket-title {
+    background-color: #23c0d7 !important;
+    border-bottom: 1px solid black !important;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.total-price {
+    margin-top: 20px;
+    font-size: 1.2em;
 }
 
 .cancel {

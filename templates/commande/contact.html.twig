@@ -4,16 +4,8 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="main-title">
-                <a href="{{ path("home") }}"><h1>Billetterie du Musée du Louvre</h1></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h2>Contactez-nous !</h2>
-            <p>Une question ? Une remarque ? N'hésitez pas à nous contacter en remplissant le formulaire ci-dessous, nous vous répondrons dans les plus brefs délais.</p>
+            <h2>{{ "Contactez-nous !"|trans }}</h2>
+            <p>{{ "Une question ? Une remarque ? N'hésitez pas à nous contacter en remplissant le formulaire ci-dessous, nous vous répondrons dans les plus brefs délais."|trans }}</p>
         </div>
     </div>
 
@@ -26,13 +18,13 @@
     <div class="row">
         <div class="col-lg-12">
             <form action="{{ path("contact") }}" class="contact-form" method="post">
-                Nom : <br />
+                {{ "Nom"|trans }} : <br />
                 <input type="text" name="nom" class="form-text" required><br />
-                Adresse email : <br />
+                {{ "Adresse email"|trans }} : <br />
                 <input type="email" name="email" class="form-text" required><br />
                 Message : <br />
                 <textarea name="content" required></textarea><br /><br />
-                <input type="submit" class="btn btn-primary" value="Envoyer">
+                <input type="submit" class="btn btn-primary" value={{ "Envoyer"|trans}}>
             </form>
         </div>
     </div>

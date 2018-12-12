@@ -1,0 +1,5 @@
+validator.notSunday: "You can't book tickets for a sunday."
+validator.notTuesday: "You can't book tickets for a sunday."
+validator.not14: "You can't book a full day ticket for today anymore."
+validator.full: "The maximum amount of tickets have already been booked for this date."
+validator.holidays: "You can't book tickets for a holiday."

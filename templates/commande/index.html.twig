@@ -2,65 +2,63 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="main-title">
-                <h1>Billetterie du Musée du Louvre</h1>
-            </div>
-        </div>
+    <div class="translate">
+        {% if app.request.locale == "fr" %}
+            <a href="/en"><img src="{{ asset('img/united-kingdom-flag-icon-32.png') }}" alt="english flag"></a>
+        {% elseif app.request.locale == "en" %}
+            <a href="/fr"><img src="{{ asset('img/france-flag-icon-32.png') }}" alt="drapeau français"></a>
+        {% endif %}
     </div>
-
-    <div><a href="{{ path("translate") }}"><button class="btn btn-accent">EN/FR</button></a></div>
 
     <div class="row intro">
         <div class="col-lg-6">
-            <h2>{% trans %}Bienvenue !{% endtrans %}</h2>
-            <p>Ici vous pourrez réserver jusqu'à six billets pour votre visite.</p>
-            <p>Les réservations sont possibles tous les jours sauf les mardi, dimanche et jours fériés.</p>
-            <p>Chaque billet est nominatif et il est possible de réserver un maximum de six billets par commande.</p>
-            <p>Les différents tarifs sont détaillés ci-contre.</p>
-            <p>À l'entrée du musée, il vous sera demandé un justificatif pour les éventuels tarifs spéciaux.</p>
+            <h2>{{ "Bienvenue !"|trans }}</h2>
+            <p>{{ "Ici vous pourrez réserver jusqu'à six billets pour votre visite." |trans }}</p>
+            <p>{{ "Les réservations sont possibles tous les jours sauf les mardi, dimanche et jours fériés." |trans }}</p>
+            <p>{{ "Chaque billet est nominatif et il est possible de réserver un maximum de six billets par commande." |trans }}</p>
+            <p>{{ "Les différents tarifs sont détaillés ci-contre." |trans }}</p>
+            <p>{{ "À l'entrée du musée, il vous sera demandé un justificatif pour les éventuels tarifs spéciaux." |trans }}</p>
             <hr />
-            <h3>Horaires du musée :</h3>
+            <h3>{{ "Horaires du musée" |trans }}</h3>
             <p>
-                Lundi : 9 h - 20 h<br />
-                Mardi : Fermé<br />
-                Du mercredi au dimanche : 9 h - 18 h
+                {{ "Lundi : 9 h - 20 h" |trans }}<br />
+                {{ "Mardi : Fermé" |trans }}<br />
+                {{ "Du mercredi au dimanche : 9 h - 18 h" |trans }}
             </p>
-            <p>L'évacuation des salles débute à 19 h 30 le lundi et à 17 h 30 les autres jours.</p>
+            <p>{{ "L'évacuation des salles débute à 19 h 30 le lundi et à 17 h 30 les autres jours." |trans }}</p>
         </div>
         <div class="col-lg-6 liste-tarifs">
-            <h2>Liste des tarifs</h2>
-            <h4>Voici une liste des tarifs disponibles ainsi que les conditions associées :</h4>
+            <h2>{{ "Liste des tarifs"|trans }}</h2>
+            <h4>{{ "Voici une liste des tarifs disponibles ainsi que les conditions associées :" |trans }}</h4>
 
             <table class="pres-tarifs">
                 <tr>
-                    <td>– Tarif normal : pour tous, à partir de 12 ans</td>
+                    <td>– {{ "Tarif normal : pour tous, à partir de 12 ans" |trans }}</td>
                     <td><strong>16 €</strong></td>
                 </tr>
                 <tr>
-                    <td>– Tarif enfant : de 4 à 11 ans</td>
+                    <td>– {{ "Tarif enfant : de 4 à 11 ans" |trans }}</td>
                     <td><strong>  8 €</strong></td>
                 </tr>
                 <tr>
-                    <td>– Tarif sénior : à partir de 60 ans</td>
+                    <td>– {{ "Tarif sénior : à partir de 60 ans" |trans }}</td>
                     <td><strong>12 €</strong></td>
                 </tr>
                 <tr>
-                    <td>– Tarif réduit : soumis à conditions*</td>
+                    <td>– {{ "Tarif réduit : soumis à conditions*" |trans }}</td>
                     <td><strong>10 €</strong></td>
                 </tr>
                 <tr>
-                    <td>– L'accès est gratuit pour les enfants de moins de 4 ans.</td>
+                    <td>– {{ "L'accès est gratuit pour les enfants de moins de 4 ans." |trans }}</td>
                 </tr>
             </table>
-            <p>*Le tarif réduit est réservé aux étudiants, chômeurs, militaires, employés du Musée et du Ministère de la culture.
+            <p>*{{ "Le tarif réduit est réservé aux étudiants, chômeurs, militaires, employés du Musée et du Ministère de la culture." |trans }}
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12 enter-order">
-            <p>Cliquez sur ce bouton pour continuer. <a href="{{ path("order") }}"><button class="btn-lg btn-primary">Continuer</button></a></p>
+            <p>{{ "Cliquez sur ce bouton pour continuer" |trans }} <a href="{{ path("order") }}"><button class="btn-lg btn-primary">{{ "Continuer" |trans }}</button></a></p>
         </div>
     </div>
 

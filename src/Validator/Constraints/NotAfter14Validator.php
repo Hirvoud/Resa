@@ -14,7 +14,8 @@ class NotAfter14Validator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $date = new \DateTime();
+        $date = \DateTime::createFromFormat('U',time());
+
         $today = $date->format("d/M/y");
         $visitDate = $value->getDateVisite()->format("d/M/y");
         $hour = $date->format("H");

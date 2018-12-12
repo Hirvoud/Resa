@@ -23,7 +23,7 @@ class NotAfter14ValidatorTest extends ValidatorTestAbstract
 
     public static function setUpBeforeClass()
     {
-        ClockMock::register(NotAfter14::class);
+        ClockMock::register(NotAfter14Validator::class);
     }
 
     /**
@@ -32,7 +32,7 @@ class NotAfter14ValidatorTest extends ValidatorTestAbstract
      */
     public function testValidation14Ok()
     {
-        ClockMock::withClockMock("2018-12-4 13:00:00");
+        ClockMock::withClockMock(strtotime("2018-12-4 13:00:00"));
 
         $commande = $this->getMockBuilder(Commande::class)
                         ->disableOriginalConstructor()
@@ -58,14 +58,14 @@ class NotAfter14ValidatorTest extends ValidatorTestAbstract
      */
     public function testValidation14Ko()
     {
-        ClockMock::withClockMock("2018-12-4 15:00:00");
+        ClockMock::withClockMock(strtotime("2018-12-4 15:00:00"));
 
         $commande = $this->getMockBuilder(Commande::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $commande->method("getDateVisite")
-            ->willReturn(new \DateTime("2018-12-04"));
+            ->willReturn(new \DateTime("2018-12-4"));
 
         $commande->method("getTypeVisite")
             ->willReturn("j");

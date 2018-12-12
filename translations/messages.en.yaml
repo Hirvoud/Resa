@@ -1,1 +1,77 @@
-Bienvenue: Welcome
+#base.html
+Musée du Louvre – Billetterie: Musée du Louvre – Ticketing
+Billetterie du Musée du Louvre: Louvre Museum ticketing
+Mentions légales: Legal notice
+Conditions générales de vente: General terms and conditions of sale
+#######################
+
+#index.html
+Bienvenue !: Welcome!
+Liste des tarifs: Price list
+Ici vous pourrez réserver jusqu'à six billets pour votre visite.: On this page you'll be able to book up to 6 tickets for your visit.
+Les réservations sont possibles tous les jours sauf les mardi, dimanche et jours fériés.: Reservations can be made for every day but tuedays, sundays and holidays.
+À l'entrée du musée, il vous sera demandé un justificatif pour les éventuels tarifs spéciaux.: Upon entrance, supporting documents for special tariffs will be asked for.
+Chaque billet est nominatif et il est possible de réserver un maximum de six billets par commande.: Every ticket is registered to a named person and you can book up to six tickets per order.
+Les différents tarifs sont détaillés ci-contre.: Tickets rates are detailed in the adjacent table
+"Voici une liste des tarifs disponibles ainsi que les conditions associées :": Here is a list of tariffs and conditions
+Horaires du musée: Museum's opening hours
+"Lundi : 9 h - 20 h": "Monday: 9 a.m. – 8 p.m."
+"Mardi : Fermé": 'Tuesday: Closed'
+"Du mercredi au dimanche : 9 h - 18 h": 'Wednesday to Sunday: 9 a.m. – 6 p.m.'
+L'évacuation des salles débute à 19 h 30 le lundi et à 17 h 30 les autres jours.: "Museum's evacuation starts at 7:30 p.m. on monday and at 5:30 p.m. the other days."
+"Tarif normal : pour tous, à partir de 12 ans": 'Normal rate: for everybody from the age of 12'
+"Tarif enfant : de 4 à 11 ans": 'Children rate: from the age of 4 to 11'
+"Tarif sénior : à partir de 60 ans": 'Senior rate: from the age of 60'
+"Tarif réduit : soumis à conditions*": 'Reduced rate: conditional*'
+L'accès est gratuit pour les enfants de moins de 4 ans.: Children under 4 can enter the Museum for free
+Le tarif réduit est réservé aux étudiants, chômeurs, militaires, employés du Musée et du Ministère de la culture.: The reduced rate is reserved for students, unemployed, military personel, Ministry of Culture and Museum's employees.
+Cliquez sur ce bouton pour continuer: 'Click on this button to continue'
+Continuer: 'Continue'
+#######################
+
+#order.html
+Détails de votre visite: Visit's details
+Date de visite: Visit date
+Nombre de billets: Number of tickets
+Type de visite*: Visit type
+"*L'accès des billets demi-journée se fait à partir de 14h.": Half-day tickets can enter the Museum from 2 p.m.
+Enregistrer: Validate
+Annuler: Cancel
+
+#select.html
+Sélection des billets: Tickets selection
+Un justificatif vous sera demandé à l'entrée du musée.: Supporting documents will be asked for upon entrance.
+Valider: Validate
+#######################
+
+#confirm.html
+Détail de votre commande: Your order's details
+Vous trouverez ci-dessous la liste des différents billets composant votre commande.: You'll find below a list of the different tickets of your order.
+Billet: Ticket
+Prénom: First name
+Nom: Last name
+Âge: Age
+ans: ""
+Tarif: Rate
+Le prix total de votre commande s'élève à: Your order total price is
+Veuillez cliquer sur le lien suivant pour procéder au paiement.: Please click on the link below to pay for your order
+Annuler la commande: Cancel order
+#######################
+
+#success.html
+Merci de votre commande !: Thank you for your order!
+"Un email de confirmation vient d'être envoyée à l'adresse suivante :": "A confirmation email has been sent to the following address:"
+Retour à l'accueil: Back to home
+#######################
+
+#contact.html
+Contactez-nous !: Contact us!
+Une question ? Une remarque ? N'hésitez pas à nous contacter en remplissant le formulaire ci-dessous, nous vous répondrons dans les plus brefs délais.: If you have a question or a suggestion, please contact us by filling the following form, we will answer you as soon as possible.
+Adresse email: Email address
+Envoyer: Send
+#######################
+
+#error.html
+Erreur: Error
+Une erreur s'est produite. Veuillez réessayer s'il vous plaît.: An error has occured. Please try again.
+#######################

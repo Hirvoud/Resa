@@ -2,18 +2,10 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="main-title">
-                <h1>Billetterie du Musée du Louvre</h1>
-            </div>
-        </div>
-    </div>
-
     <div class="col-lg-12">
-        <h2>Erreur</h2>
-        <p>Une erreur s'est produite. Veuillez réessayer s'il vous plaît.</p>
-        <p><a href="{{ path("home") }}"><button class="btn btn-primary">Retour à l'accueil</button></a></p>
+        <h2>{{ "Erreur"|trans }}</h2>
+        <p>{{ "Une erreur s'est produite. Veuillez réessayer s'il vous plaît."|trans }}</p>
+        <p><a href="{{ path("home") }}"><button class="btn btn-primary">{{ "Retour à l'accueil"|trans }}</button></a></p>
     </div>
 
 {% endblock %}

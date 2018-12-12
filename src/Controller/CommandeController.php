@@ -25,7 +25,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/commande", name="order")
+     * @Route({
+     *     "fr": "/commande",
+     *     "en": "/order"
+     * }, name="order")
      * @param Request $request
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -51,7 +54,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/selection", name="select")
+     * @Route({
+     *     "fr": "/selection",
+     *     "en": "/select"
+     * }, name="select")
      * @param Request $request
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -82,7 +88,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/confirmation", name="confirm")
+     * @Route({
+     *     "fr": "/confirmation",
+     *     "en": "/confirm"
+     * }, name="confirm")
      * @param CommandeManager $commandeManager
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \App\Exception\CommandeNotFoundException
@@ -100,26 +109,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/testmail", name="testmail")
-     * @param CommandeManager $commandeManager
-     * @param Mailing $mailing
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws CommandeNotFoundException
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    public function testMail(CommandeManager $commandeManager, Mailing $mailing)
-    {
-        $commande = $commandeManager->getCurrentCommande();
-
-        $mailing->SendMail($commande);
-
-        return $this->redirectToRoute("confirm");
-    } //TODO Supprimer cette fonction
-
-    /**
-     * @Route("/succes", name="success")
+     * @Route({
+     *     "fr": "/succes",
+     *     "en": "/success"
+     * }, name="success")
      * @param CommandeManager $commandeManager
      * @param ObjectManager $manager
      * @param Mailing $mailing
@@ -171,7 +164,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/erreur", name="error")
+     * @Route({
+     *     "fr": "/erreur",
+     *     "en": "/error"
+     * }, name="error")
      */
     public function error()
     {
@@ -191,7 +187,10 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/mentions-legales", name="mentions")
+     * @Route({
+     *     "fr": "/mentions-legales",
+     *     "en": "/legal-notice"
+     * }, name="mentions")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function mentions()
@@ -223,13 +222,14 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/en-fr", name="translate")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route({
+     *     "fr": "/conditions-generales",
+     *     "en": "/general-terms"
+     * }, name="cgv")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function translate()
+    public function cgv()
     {
-        setlocale(LC_ALL, "en");
-
-        return $this->redirectToRoute("home");
+        return $this->render("commande/cgv.html.twig");
     }
 }

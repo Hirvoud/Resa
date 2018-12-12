@@ -10,5 +10,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class NoSunday extends Constraint
 {
-    public $message = "Vous ne pouvez pas réserver de place le dimanche.";
+    public $message = "validator.notSunday";
 }

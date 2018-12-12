@@ -4,15 +4,7 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="main-title">
-                <h1>Billetterie du Musée du Louvre</h1>
-            </div>
-        </div>
-    </div>
-
-    <h2>Sélection des billets</h2>
+    <h2>{{ "Sélection des billets"|trans }}</h2>
 
     {% for alert in app.flashes("warning") %}
         <div class="flash-warning">
@@ -28,11 +20,11 @@
                 </div>
             {% endfor %}
         </div>
-            <p>*Un justificatif vous sera demandé à l'entrée du musée.</p>
+            <p>*{{ "Un justificatif vous sera demandé à l'entrée du musée."|trans }}</p>
 
         <div class="d-flex justify-content-between">
-            <div><a href="{{ path("cancel") }}"><button class="btn btn-danger">Annuler</button></a></div>
-            <div><button type="submit" class="btn btn-primary">Valider</button></div>
+            <div><a href="{{ path("cancel") }}"><button class="btn btn-danger">{{ "Annuler"|trans }}</button></a></div>
+            <div><button type="submit" class="btn btn-primary">{{ "Valider"|trans }}</button></div>
         </div>
     {{ form_end(ticketForm) }}
 

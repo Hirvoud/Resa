@@ -37,8 +37,8 @@ class CommandeType extends AbstractType
             ))
             ->add("typeVisite", ChoiceType::class, array(
                 "choices" => array(
-                    "Journée" => "j",
-                    "Demi-journée" => "dj"
+                    "Journée / Full day" => "j",
+                    "Demi-journée / Half day" => "dj"
                 )
             ));
     }

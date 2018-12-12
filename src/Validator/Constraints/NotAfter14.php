@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class NotAfter14 extends Constraint
 {
-    public $message = "Vous ne pouvez plus réserver de billet journée aujourd'hui.";
+    public $message = "validator.not14";
 
     public function getTargets()
     {

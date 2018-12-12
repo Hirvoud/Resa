@@ -32,7 +32,7 @@ class PriceCalculator
                 $prixBillet = self::ENFANT;
             }elseif ($age >= 60){
                 $prixBillet = self::SENIOR;
-            }elseif ($age > 12){
+            }elseif ($age >= 12){
                 $prixBillet = self::NORMAL;
             }
 

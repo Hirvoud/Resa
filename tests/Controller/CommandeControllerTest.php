@@ -10,10 +10,12 @@ class CommandeControllerTest extends WebTestCase
     public function testNewOrder()
     {
         $client = static::createClient();
-        $crawler = $client->request("GET", "/");
+        $crawler = $client->request("GET", "/fr/");
 
         $link = $crawler->selectLink("Continuer")->link();
         $crawler = $client->click($link);
+
+        $this->assertContains('commande',$client->getRequest()->getUri());
 
         $form = $crawler->selectButton("Enregistrer")->form();
         $form["commande[email]"] = "abc@xyz.def";
@@ -22,12 +24,12 @@ class CommandeControllerTest extends WebTestCase
         $form["commande[typeVisite]"] = "dj";
 
         $client->submit($form);
+
         $crawler = $client->followRedirect();
 
         $this->assertSame(1, $crawler->filter("html:contains('Sélection des billets')")->count());
         $this->assertSame(2, $crawler->filter("label:contains('Prénom')")->count());
-        $this->assertSame(1, $crawler->filter("html:contains('Nom')")->count());
-        $this->assertSame(1, $crawler->filter("html:contains('Date de naissance')")->count());
+        $this->assertSame(2, $crawler->filter("label:contains('Nom')")->count());
 
         $form = $crawler->selectButton("Valider")->form();
         $form["commande_billets[billets][0][prenom]"] = "Anatole";

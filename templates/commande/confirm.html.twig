@@ -2,27 +2,29 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="main-title">
-                <h1>Billetterie du Musée du Louvre</h1>
-            </div>
-        </div>
-    </div>
-
-
-
     <div>
-        <h2>Détail de votre commande</h2>
-        <p>Vous trouverez ci-dessous la liste des différents billets composant votre commande.</p>
+        <h2>{{ "Détail de votre commande"|trans }}</h2>
+        <p>{{ "Vous trouverez ci-dessous la liste des différents billets composant votre commande."|trans }}</p>
         <div class="row ticket-summary">
             {% for billet in billets %}
                 <div class="col-lg-2">
-                    <p><strong>Billet {{ loop.index }}</strong></p>
-                    <p><strong>Prénom</strong> : {{ billet.prenom }}</p>
-                    <p><strong>Nom</strong> : {{ billet.nom }}</p>
-                    <p><strong>Age</strong> : {{ billet.visitAge }} ans</p>
-                    <p><strong>Tarif</strong> : {{ billet.tarif }} €</p>
+                    <table class="order-summary">
+                        <tr class="ticket-title">
+                            <th>{{ "Billet"|trans }} {{ loop.index }}</th>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ "Prénom"|trans }}</strong> : {{ billet.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ "Nom"|trans }}</strong> : {{ billet.nom }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ "Âge"|trans }}</strong> : {{ billet.visitAge }} {{ "ans"|trans }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{ "Tarif"|trans }}</strong> : {{ billet.tarif }} €</td>
+                        </tr>
+                    </table>
                 </div>
             {% endfor %}
         </div>
@@ -35,18 +37,12 @@
         </div>
     {% endfor %}
 
-    <div>
-        <p>Le prix total de votre commande s'élève à <strong>{{ commande.prixTotal }} €</strong>.</p>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12 cancel">
-            <a href="{{ path("testmail") }}"><button class="btn btn-warning">Test mail</button></a>
-        </div>
+    <div class="total-price">
+        <p>{{ "Le prix total de votre commande s'élève à"|trans }} <strong>{{ commande.prixTotal }} €</strong>.</p>
     </div>
 
     <div>
-        <p>Veuillez cliquer sur le lien suivant pour procéder au paiement.</p>
+        <p>{{ "Veuillez cliquer sur le lien suivant pour procéder au paiement."|trans }}</p>
 
         <form action="{{ path('checkout') }}" method="POST">
             <script
@@ -65,7 +61,7 @@
 
     <div class="row">
         <div class="col-lg-12 cancel">
-            <a href="{{ path("cancel") }}"><button class="btn btn-danger">Annuler la commande</button></a>
+            <a href="{{ path("cancel") }}"><button class="btn btn-danger">{{ "Annuler la commande"|trans }}</button></a>
         </div>
     </div>
 

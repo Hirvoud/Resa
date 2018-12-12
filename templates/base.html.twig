@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-        <title>{% block title %}Musée du Louvre – Billetterie{% endblock %}</title>
+        <title>{% block title %}{{ "Musée du Louvre – Billetterie"|trans }}{% endblock %}</title>
         <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">-->
         <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
         <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset("css/bootstrap-datepicker.css") }}">
         <link rel="stylesheet" href="{{ asset("css/style.css") }}">
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        {% endblock %}
     </head>
     <body>
 
     <div class="container">
-        {% block body %}{% endblock %}
+        <div style="min-height: 100vh;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-title">
+                        <h1>{{ "Billetterie du Musée du Louvre"|trans }}</h1>
+                    </div>
+                </div>
+            </div>
+            {% block body %}
+
+            {% endblock %}
+        </div>
         <div class="footer">
-            <p>Musée du Louvre ©2018 – <a href="{{ path("mentions") }}">Mentions légales</a> – <a href="{{ path("contact") }}">Contact</a></p>
+            <p>Musée du Louvre ©2018 – <a href="{{ path("mentions") }}">{{ "Mentions légales"|trans }}</a> – <a href="{{ path("contact") }}">Contact</a> –
+            <a href="{{ path("cgv") }}">{{ "Conditions générales de vente"|trans }}</a></p>
         </div>
     </div>
 
